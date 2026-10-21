@@ -6,6 +6,17 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* Sidebar biru-abu tua, aksen merah untuk menu aktif dan status menunggu */
+    --color-nav: #2e4a62;
+    --color-nav-deep: #243b4f;
+    --color-primary: #1672ab;
+    --color-primary-dark: #115a87;
+    --color-alert: #d93a4a;
+    --color-concrete: #f3f5f7;
+    --color-ink: #1f2a33;
+    --color-line: #d9dee3;
+    --color-danger: #b3261e;
+    --color-ok: #1f7a4d;
 }
