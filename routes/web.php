@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DokumenController;
+use App\Http\Controllers\TindakLanjutController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dashboard');
@@ -25,6 +26,12 @@ Route::middleware(['auth', 'aktif'])->group(function () {
     // Dokumen: hak akses diatur di DokumenPolicy
     Route::get('dokumen/{dokumen}/berkas', [DokumenController::class, 'berkas'])->name('dokumen.berkas');
     Route::resource('dokumen', DokumenController::class)->parameters(['dokumen' => 'dokumen']);
+
+    // Tindak lanjut (status Menunggu -> Selesai)
+    Route::post('dokumen/{dokumen}/tindak-lanjut', [TindakLanjutController::class, 'store'])->name('tindak-lanjut.store');
+    Route::patch('dokumen/{dokumen}/buka-kembali', [TindakLanjutController::class, 'bukaKembali'])->name('tindak-lanjut.buka-kembali');
+    Route::get('tindak-lanjut/{tindakLanjut}/bukti', [TindakLanjutController::class, 'bukti'])->name('tindak-lanjut.bukti');
+    Route::delete('tindak-lanjut/{tindakLanjut}', [TindakLanjutController::class, 'destroy'])->name('tindak-lanjut.destroy');
 
     // Khusus Pimpinan
     Route::middleware('role:pimpinan')->group(function () {

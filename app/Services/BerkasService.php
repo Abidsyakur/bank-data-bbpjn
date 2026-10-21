@@ -15,9 +15,9 @@ class BerkasService
 {
     private const DISK = 'local';
 
-    public function simpan(UploadedFile $file): string
+    public function simpan(UploadedFile $file, string $folder = 'dokumen'): string
     {
-        $folder = 'dokumen/' . now()->format('Y/m');
+        $folder = $folder . '/' . now()->format('Y/m');
         $nama   = Str::uuid() . '.' . $file->extension();
 
         return $file->storeAs($folder, $nama, self::DISK);

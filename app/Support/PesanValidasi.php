@@ -20,6 +20,7 @@ class PesanValidasi
             'mimes'            => ':attribute harus berformat PDF, JPG, atau PNG.',
             'uploaded'         => 'Berkas gagal diunggah. Pastikan ukurannya tidak melebihi 10 MB.',
             'berkas.max'       => 'Ukuran berkas maksimal 10 MB.',
+            'bukti.max'        => 'Ukuran bukti maksimal 10 MB.',
         ];
     }
 
@@ -36,6 +37,8 @@ class PesanValidasi
             'judul'            => 'Judul',
             'tanggal'          => 'Tanggal',
             'berkas'           => 'Berkas',
+            'catatan'          => 'Catatan',
+            'bukti'            => 'Bukti',
         ];
     }
 }

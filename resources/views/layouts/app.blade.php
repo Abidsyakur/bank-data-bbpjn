@@ -74,7 +74,12 @@
     </aside>
 
     <div class="flex min-w-0 flex-1 flex-col">
-        <header class="flex items-center justify-end border-b border-line bg-white px-5 py-2.5 lg:px-10">
+        <header class="flex items-center justify-between gap-4 border-b border-line bg-white px-5 py-2.5 lg:px-10">
+            <form method="GET" action="{{ route('dokumen.index') }}" role="search" class="w-full max-w-sm">
+                <label for="cari-cepat" class="sr-only">Cari dokumen</label>
+                <input id="cari-cepat" name="q" type="search" value="{{ request('q') }}" placeholder="Cari nomor surat atau judul"
+                       class="w-full rounded-md border border-line bg-concrete px-3 py-2 text-sm focus:border-ink focus:bg-white focus:outline-2 focus:outline-primary">
+            </form>
             <details class="relative">
                 <summary class="flex cursor-pointer list-none items-center gap-3 [&::-webkit-details-marker]:hidden">
                     <span class="grid size-9 place-items-center rounded-full bg-nav text-sm font-semibold text-white">{{ $inisial }}</span>

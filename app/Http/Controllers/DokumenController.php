@@ -34,8 +34,14 @@ class DokumenController extends Controller
             abort_if($layanan === null, 404);
         }
 
+        $kata = trim((string) $request->query('q', ''));
+
         $dasar = Dokumen::dapatDilihat($user)
-            ->when($layanan, fn ($q) => $q->where('layanan_id', $layanan->id));
+            ->when($layanan, fn ($q) => $q->where('layanan_id', $layanan->id))
+            ->when($kata !== '', function ($q) use ($kata) {
+                $like = '%' . addcslashes($kata, '%_\\') . '%';
+                $q->where(fn ($w) => $w->where('nomor_surat', 'like', $like)->orWhere('judul', 'like', $like));
+            });
 
         $hitung = [
             'semua'    => (clone $dasar)->count(),
@@ -55,7 +61,7 @@ class DokumenController extends Controller
             ->paginate(15)
             ->withQueryString();
 
-        return view('dokumen.index', compact('dokumen', 'layanan', 'status', 'hitung'));
+        return view('dokumen.index', compact('dokumen', 'layanan', 'layananList', 'status', 'hitung', 'kata'));
     }
 
     public function create(Request $request): View
@@ -101,8 +107,9 @@ class DokumenController extends Controller
         $dokumen->load(['layanan', 'user']);
 
         return view('dokumen.show', [
-            'dokumen'    => $dokumen,
-            'adaBerkas'  => $this->berkasService->ada($dokumen->file_path),
+            'dokumen'      => $dokumen,
+            'adaBerkas'    => $this->berkasService->ada($dokumen->file_path),
+            'tindakLanjut' => $dokumen->tindakLanjut()->with('user')->orderByDesc('tanggal')->orderByDesc('id')->get(),
         ]);
     }
 

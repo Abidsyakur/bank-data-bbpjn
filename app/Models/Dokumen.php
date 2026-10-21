@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Dokumen extends Model
@@ -31,6 +32,11 @@ class Dokumen extends Model
     public function layanan(): BelongsTo
     {
         return $this->belongsTo(Layanan::class);
+    }
+
+    public function tindakLanjut(): HasMany
+    {
+        return $this->hasMany(TindakLanjut::class);
     }
 
     /** Membatasi dokumen sesuai hak akses pengguna. */
