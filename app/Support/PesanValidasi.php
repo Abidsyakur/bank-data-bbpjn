@@ -19,7 +19,14 @@ class PesanValidasi
             'file'             => ':attribute harus berupa berkas.',
             'mimes'            => ':attribute harus berformat PDF, JPG, atau PNG.',
             'uploaded'         => 'Berkas gagal diunggah. Pastikan ukurannya tidak melebihi 10 MB.',
+            'after_or_equal'   => ':attribute tidak boleh lebih awal dari tanggal mulai.',
+            'in'               => ':attribute tidak valid.',
+            'integer'          => ':attribute tidak valid.',
             'berkas.max'       => 'Ukuran berkas maksimal 10 MB.',
+            'berkas_backup.mimes'    => 'Berkas backup harus berformat ZIP.',
+            'berkas_backup.max'      => 'Ukuran berkas backup terlalu besar.',
+            'berkas_backup.uploaded' => 'Berkas gagal diunggah. Periksa batas upload_max_filesize dan post_max_size di php.ini.',
+            'konfirmasi.in'          => 'Ketik PULIHKAN persis seperti contoh.',
             'bukti.max'        => 'Ukuran bukti maksimal 10 MB.',
         ];
     }
@@ -37,6 +44,13 @@ class PesanValidasi
             'judul'            => 'Judul',
             'tanggal'          => 'Tanggal',
             'berkas'           => 'Berkas',
+            'berkas_backup'    => 'Berkas backup',
+            'konfirmasi'       => 'Konfirmasi',
+            'dari'             => 'Tanggal mulai',
+            'sampai'           => 'Tanggal akhir',
+            'layanan'          => 'Kategori layanan',
+            'pengguna'         => 'Pengguna',
+            'aksi'             => 'Jenis aktivitas',
             'catatan'          => 'Catatan',
             'bukti'            => 'Bukti',
         ];

@@ -62,11 +62,25 @@
             @if ($user->isPimpinan())
                 <details open class="group border-t border-white/10">
                     <summary class="{{ $judulGrup }}">
+                        <span>LAPORAN</span>
+                        <svg class="size-4 transition group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5.2 7.5 10 12.3l4.8-4.8 1.1 1.1L10 14.5 4.1 8.6z"/></svg>
+                    </summary>
+                    <div class="bg-nav-deep py-1">
+                        <a href="{{ route('laporan.index') }}" class="{{ $item(request()->routeIs('laporan.*')) }}">Laporan rekapitulasi</a>
+                        <a href="{{ route('riwayat.index') }}" class="{{ $item(request()->routeIs('riwayat.*')) }}">Riwayat aktivitas</a>
+                    </div>
+                </details>
+            @endif
+
+            @if ($user->isPimpinan())
+                <details open class="group border-t border-white/10">
+                    <summary class="{{ $judulGrup }}">
                         <span>PENGATURAN</span>
                         <svg class="size-4 transition group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5.2 7.5 10 12.3l4.8-4.8 1.1 1.1L10 14.5 4.1 8.6z"/></svg>
                     </summary>
                     <div class="bg-nav-deep py-1">
                         <a href="{{ route('akun.index') }}" class="{{ $item(request()->routeIs('akun.*')) }}">Manajemen akun</a>
+                        <a href="{{ route('backup.index') }}" class="{{ $item(request()->routeIs('backup.*')) }}">Backup &amp; restore</a>
                     </div>
                 </details>
             @endif
