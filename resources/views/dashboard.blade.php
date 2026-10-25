@@ -5,13 +5,15 @@
 @section('content')
     @php
         $kartu = [
-            ['Total dokumen', $ringkasan['total'], route('dokumen.index'), null, null],
+            ['Total dokumen', $ringkasan['total'], route('dokumen.index'), null, null, null],
             ['Total pengaduan', $ringkasan['pengaduan'], null, null,
-                $ringkasan['pengaduan_berstatus'] ? $ringkasan['pengaduan_menunggu'] . ' masih menunggu' : null],
+                $ringkasan['pengaduan_berstatus'] ? $ringkasan['pengaduan_menunggu'] . ' masih menunggu' : null, null],
         ];
         if ($ringkasan['ada_status']) {
-            $kartu[] = ['Menunggu tindak lanjut', $ringkasan['menunggu'], route('dokumen.index', ['status' => 'menunggu']), 'bg-alert', null];
-            $kartu[] = ['Selesai', $ringkasan['selesai'], route('dokumen.index', ['status' => 'selesai']), 'bg-ok', null];
+            $kartu[] = ['Menunggu tindak lanjut', $ringkasan['menunggu'], route('dokumen.index', ['status' => 'menunggu']), 'bg-alert', null, null];
+            $kartu[] = ['Selesai', $ringkasan['selesai'], route('dokumen.index', ['status' => 'selesai']), 'bg-ok',
+                $ringkasan['persen_selesai'] !== null ? 'dari ' . $ringkasan['dipantau'] . ' dokumen yang dipantau' : null,
+                $ringkasan['persen_selesai']];
         }
     @endphp
 
@@ -31,7 +33,7 @@
     </div>
 
     <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        @foreach ($kartu as [$label, $nilai, $url, $titik, $catatan])
+        @foreach ($kartu as [$label, $nilai, $url, $titik, $catatan, $persen])
             @php
                 $kelas = 'block rounded-md border border-line bg-white p-5';
             @endphp
@@ -76,6 +78,7 @@
                                 <th class="px-4 py-2.5 text-right font-medium">Total</th>
                                 <th class="px-4 py-2.5 text-right font-medium">Menunggu</th>
                                 <th class="px-4 py-2.5 text-right font-medium">Selesai</th>
+                                <th class="px-4 py-2.5 text-right font-medium">% Selesai</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,6 +90,7 @@
                                     <td class="px-4 py-2.5 text-right">{{ $l->total }}</td>
                                     <td class="px-4 py-2.5 text-right">{{ $l->menunggu }}</td>
                                     <td class="px-4 py-2.5 text-right">{{ $l->selesai }}</td>
+                                    <td class="px-4 py-2.5 text-right">{{ ($l->menunggu + $l->selesai) > 0 ? round($l->selesai / ($l->menunggu + $l->selesai) * 100) . '%' : '-' }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

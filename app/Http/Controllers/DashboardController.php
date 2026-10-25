@@ -29,6 +29,9 @@ class DashboardController extends Controller
         $berstatus = $rekap->where('butuh_tindak_lanjut', true)->values();
         $arsip     = $rekap->where('butuh_tindak_lanjut', false)->values();
 
+        // Persentase = selesai / (menunggu + selesai), hanya dari layanan yang melacak status.
+        $dipantau = $berstatus->sum('menunggu') + $berstatus->sum('selesai');
+
         $ringkasan = [
             'total'              => $rekap->sum('total'),
             'menunggu'           => $berstatus->sum('menunggu'),
@@ -37,6 +40,8 @@ class DashboardController extends Controller
             'pengaduan_menunggu' => $pengaduan->where('butuh_tindak_lanjut', true)->sum('menunggu'),
             'pengaduan_berstatus' => $pengaduan->where('butuh_tindak_lanjut', true)->isNotEmpty(),
             'ada_status'         => $berstatus->isNotEmpty(),
+            'dipantau'           => $dipantau,
+            'persen_selesai'     => $dipantau > 0 ? (int) round($berstatus->sum('selesai') / $dipantau * 100) : null,
             'arsip'              => $arsip->sum('total'),
         ];
 
