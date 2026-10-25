@@ -8,15 +8,19 @@
 @theme {
     --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
 
-    /* Sidebar biru-abu tua, aksen merah untuk menu aktif dan status menunggu */
-    --color-nav: #2e4a62;
-    --color-nav-deep: #243b4f;
-    --color-primary: #1672ab;
-    --color-primary-dark: #115a87;
+    /* Warna logo BBPJN: biru navy #40517e dan kuning #fdca33 */
+    --color-nav: #40517e;
+    --color-nav-deep: #313f62;
+    --color-primary: #40517e;
+    --color-primary-dark: #313f62;
+    --color-accent: #fdca33;
+
+    /* Warna status (tetap semantik) */
     --color-alert: #d93a4a;
+    --color-ok: #1f7a4d;
+    --color-danger: #b3261e;
+
     --color-concrete: #f3f5f7;
     --color-ink: #1f2a33;
     --color-line: #d9dee3;
-    --color-danger: #b3261e;
-    --color-ok: #1f7a4d;
 }

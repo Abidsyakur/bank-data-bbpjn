@@ -61,7 +61,7 @@
         <nav class="mt-5 flex gap-6 border-b border-line text-sm" aria-label="Filter status">
             @foreach ($tab as [$kunci, $label, $jumlah, $titik])
                 <a href="{{ $tautan($kunci ?: null) }}"
-                   class="-mb-px flex items-center gap-2 border-b-2 px-1 pb-2.5 {{ ($status ?? '') === $kunci ? 'border-alert font-medium' : 'border-transparent text-ink/60 hover:text-ink' }}">
+                   class="-mb-px flex items-center gap-2 border-b-2 px-1 pb-2.5 {{ ($status ?? '') === $kunci ? 'border-primary font-medium' : 'border-transparent text-ink/60 hover:text-ink' }}">
                     @if ($titik)
                         <span class="size-2.5 rounded-full {{ $titik }}"></span>
                     @endif

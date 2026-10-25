@@ -11,7 +11,7 @@
         .sub { margin: 3px 0 0; color: #555; }
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #b8c0c7; padding: 4px 6px; text-align: left; vertical-align: top; }
-        th { background: #e9edf0; }
+        th { background: #e3e7f0; }
         .angka { text-align: right; }
         .jumlah td { font-weight: bold; background: #f3f5f7; }
         .ringkas td { border: none; padding: 2px 14px 2px 0; width: 1%; white-space: nowrap; }
@@ -19,8 +19,17 @@
     </style>
 </head>
 <body>
-    <h1>Laporan Rekapitulasi Bank Data Terpusat</h1>
-    <p class="sub">BBPJN Sumatera Selatan</p>
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <td style="border: none; padding: 0; width: 170px; vertical-align: middle;">
+                <img src="{{ public_path('images/logo-bbpjn.png') }}" alt="BBPJN Sumatera Selatan" style="height: 44px;">
+            </td>
+            <td style="border: none; padding: 0; vertical-align: middle;">
+                <h1>Laporan Rekapitulasi Bank Data Terpusat</h1>
+                <p class="sub">Balai Besar Pelaksanaan Jalan Nasional Sumatera Selatan</p>
+            </td>
+        </tr>
+    </table>
     <p class="sub">Periode: {{ $periode }} &nbsp;|&nbsp; Kategori: {{ $kategori }}</p>
 
     <table class="ringkas" style="margin-top: 10px; width: auto;">

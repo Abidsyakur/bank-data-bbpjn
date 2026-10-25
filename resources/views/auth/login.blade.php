@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-concrete font-sans text-ink antialiased">
@@ -15,9 +16,12 @@
     <section class="relative bg-nav px-8 py-10 text-white lg:flex lg:flex-col lg:justify-center lg:px-16">
         {{-- Marka jalan putus-putus di tepi panel --}}
         <div class="absolute inset-y-0 right-0 hidden w-1 lg:block"
-             style="background: repeating-linear-gradient(to bottom, rgba(255,255,255,.35) 0 28px, transparent 28px 56px)"></div>
+             style="background: repeating-linear-gradient(to bottom, #fdca33 0 28px, transparent 28px 56px)"></div>
+        <div class="mb-10 w-fit max-w-full rounded-lg bg-white p-4">
+            <img src="{{ asset('images/logo-bbpjn.png') }}" alt="BBPJN Sumatera Selatan" width="270" height="83" class="h-auto w-64 max-w-full">
+        </div>
         <h1 class="text-3xl font-semibold leading-tight">Bank Data Terpusat</h1>
-        <p class="mt-2 text-white/70">BBPJN Sumatera Selatan</p>
+        <p class="mt-2 max-w-sm text-white/70">Balai Besar Pelaksanaan Jalan Nasional Sumatera Selatan</p>
         <p class="mt-8 max-w-sm text-white/80">
             Arsip PPID, SP4N-LAPOR!, dan JAKI dikelola dalam satu aplikasi.
         </p>

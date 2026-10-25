@@ -7,9 +7,9 @@
     $diDokumen = request()->routeIs('dokumen.*');
     $inisial = mb_strtoupper(mb_substr($user->nama, 0, 1));
 
-    $item = fn (bool $aktif) => 'block border-l-4 px-4 py-2.5 text-sm focus-visible:outline-2 focus-visible:outline-primary '
-        . ($aktif ? 'border-alert bg-white/10 font-medium text-white' : 'border-transparent text-white/75 hover:bg-white/5');
-    $judulGrup = 'group flex cursor-pointer list-none items-center justify-between px-4 py-3 text-xs font-semibold tracking-wide text-white/80 [&::-webkit-details-marker]:hidden';
+    $item = fn (bool $aktif) => 'block border-l-4 px-4 py-2.5 text-sm focus-visible:outline-2 focus-visible:outline-accent '
+        . ($aktif ? 'border-accent bg-white/10 font-medium text-white' : 'border-transparent text-white/75 hover:bg-white/5');
+    $judulGrup = 'group flex cursor-pointer list-none items-center justify-between px-4 py-3 text-xs font-semibold tracking-wide text-white/80 focus-visible:outline-2 focus-visible:outline-accent [&::-webkit-details-marker]:hidden';
 @endphp
 <!DOCTYPE html>
 <html lang="id">
@@ -20,15 +20,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-concrete font-sans text-ink antialiased">
 <div class="min-h-screen lg:flex">
 
     <aside class="shrink-0 bg-nav text-white lg:sticky lg:top-0 lg:h-screen lg:w-64 lg:overflow-y-auto">
-        <div class="px-4 py-5">
-            <p class="text-lg font-semibold leading-tight">Bank Data Terpusat</p>
-            <p class="mt-1 text-sm text-white/60">BBPJN Sumatera Selatan</p>
+        <div class="bg-white px-4 py-3">
+            <a href="{{ route('dashboard') }}" class="block focus-visible:outline-2 focus-visible:outline-primary">
+                <img src="{{ asset('images/logo-bbpjn.png') }}" alt="BBPJN Sumatera Selatan" width="270" height="83" class="h-auto w-full max-w-[190px]">
+            </a>
+        </div>
+        <div class="px-4 py-3">
+            <p class="text-sm font-semibold leading-tight">Bank Data Terpusat</p>
         </div>
 
         <nav aria-label="Menu utama">
