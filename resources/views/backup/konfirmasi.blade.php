@@ -12,7 +12,7 @@
         ];
     @endphp
 
-    <h1 class="text-xl font-semibold">Konfirmasi pemulihan data</h1>
+    <h1 class="text-xl font-semibold text-primary">Konfirmasi pemulihan data</h1>
     <p class="mt-1 text-sm text-ink/60">Berkas: {{ $berkas }}</p>
 
     <div class="mt-6 max-w-2xl rounded-md border border-danger/40 bg-danger/10 p-5 text-sm text-danger">

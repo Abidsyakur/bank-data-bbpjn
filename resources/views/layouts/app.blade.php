@@ -27,9 +27,9 @@
 <div class="min-h-screen lg:flex">
 
     <aside class="shrink-0 bg-nav text-white lg:sticky lg:top-0 lg:h-screen lg:w-64 lg:overflow-y-auto">
-        <div class="bg-white px-4 py-3">
+        <div class="border-b-4 border-accent bg-white px-4 py-3">
             <a href="{{ route('dashboard') }}" class="block focus-visible:outline-2 focus-visible:outline-primary">
-                <img src="{{ asset('images/logo-bbpjn.png') }}" alt="BBPJN Sumatera Selatan" width="270" height="83" class="h-auto w-full max-w-[190px]">
+                <img src="{{ asset('images/logo-bbpjn.png') }}" alt="BBPJN Sumatera Selatan" width="529" height="153" class="h-auto w-full max-w-[190px]">
             </a>
         </div>
         <div class="px-4 py-3">
@@ -93,7 +93,7 @@
     </aside>
 
     <div class="flex min-w-0 flex-1 flex-col">
-        <header class="flex items-center justify-between gap-4 border-b border-line bg-white px-5 py-2.5 lg:px-10">
+        <header class="flex items-center justify-between gap-4 border-b-4 border-accent bg-white px-5 py-2.5 lg:px-10">
             <form method="GET" action="{{ route('dokumen.index') }}" role="search" class="w-full max-w-sm">
                 <label for="cari-cepat" class="sr-only">Cari dokumen</label>
                 <input id="cari-cepat" name="q" type="search" value="{{ request('q') }}" placeholder="Cari nomor surat atau judul"
@@ -101,7 +101,7 @@
             </form>
             <details class="relative">
                 <summary class="flex cursor-pointer list-none items-center gap-3 [&::-webkit-details-marker]:hidden">
-                    <span class="grid size-9 place-items-center rounded-full bg-nav text-sm font-semibold text-white">{{ $inisial }}</span>
+                    <span class="grid size-9 place-items-center rounded-full bg-accent text-sm font-semibold text-primary">{{ $inisial }}</span>
                     <span class="text-left text-sm leading-tight">
                         <span class="block font-medium">{{ $user->nama }}</span>
                         <span class="block text-ink/60">{{ $user->role->nama }}</span>

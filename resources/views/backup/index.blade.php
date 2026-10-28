@@ -10,7 +10,7 @@
 
     <div class="flex flex-wrap items-start justify-between gap-3">
         <div>
-            <h1 class="text-xl font-semibold">Backup dan restore</h1>
+            <h1 class="text-xl font-semibold text-primary">Backup dan restore</h1>
             <p class="mt-1 max-w-2xl text-sm text-ink/60">
                 Backup memuat seluruh data aplikasi dan semua berkas arsip dalam satu berkas ZIP.
                 Unduh dan simpan salinannya di luar server ini, misalnya di komputer lain atau penyimpanan eksternal.
@@ -19,7 +19,7 @@
         <form method="POST" action="{{ route('backup.store') }}" onsubmit="this.querySelector('button').disabled = true; this.querySelector('button').textContent = 'Membuat backup...'">
             @csrf
             <button type="submit"
-                    class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                    class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                 Buat backup sekarang
             </button>
         </form>

@@ -11,12 +11,12 @@
     <div class="flex flex-wrap items-start justify-between gap-3">
         <div>
             <p class="text-sm text-ink/60">{{ $dokumen->layanan->nama }}</p>
-            <h1 class="text-xl font-semibold">{{ $dokumen->judul }}</h1>
+            <h1 class="text-xl font-semibold text-primary">{{ $dokumen->judul }}</h1>
         </div>
         <div class="flex items-center gap-3">
             @can('update', $dokumen)
                 <a href="{{ route('dokumen.edit', $dokumen) }}"
-                   class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                   class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                     Ubah
                 </a>
             @endcan
@@ -70,7 +70,7 @@
                     Buka berkas
                 </a>
                 <a href="{{ route('dokumen.berkas', [$dokumen, 'unduh' => 1]) }}"
-                   class="rounded-md bg-primary px-4 py-2 font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                   class="rounded-md bg-accent px-4 py-2 font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                     Unduh
                 </a>
             </div>
@@ -146,7 +146,7 @@
                     </label>
 
                     <button type="submit"
-                            class="mt-5 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                            class="mt-5 rounded-md bg-accent px-4 py-2 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                         Simpan tindak lanjut
                     </button>
                 </form>

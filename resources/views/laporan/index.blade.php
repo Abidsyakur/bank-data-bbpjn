@@ -9,7 +9,7 @@
         $r = $laporan['ringkasan'];
     @endphp
 
-    <h1 class="text-xl font-semibold">Laporan rekapitulasi</h1>
+    <h1 class="text-xl font-semibold text-primary">Laporan rekapitulasi</h1>
     <p class="mt-1 text-sm text-ink/60">Gabungan arsip PPID, SP4N-LAPOR!, dan JAKI. Atur periode dan kategori, lalu cetak atau ekspor.</p>
 
     <form method="GET" action="{{ route('laporan.index') }}"
@@ -35,7 +35,7 @@
             @error('layanan') <p class="mt-1 text-sm text-danger">{{ $message }}</p> @enderror
         </div>
         <button type="submit"
-                class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
             Tampilkan
         </button>
     </form>
@@ -52,7 +52,7 @@
                 Unduh Excel
             </a>
             <a href="{{ route('laporan.pdf', $parameter) }}"
-               class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+               class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                 Unduh PDF
             </a>
         </div>

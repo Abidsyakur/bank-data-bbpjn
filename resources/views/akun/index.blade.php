@@ -4,9 +4,9 @@
 
 @section('content')
     <div class="flex flex-wrap items-center justify-between gap-3">
-        <h1 class="text-2xl font-semibold">Manajemen akun</h1>
+        <h1 class="text-2xl font-semibold text-primary">Manajemen akun</h1>
         <a href="{{ route('akun.create') }}"
-           class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+           class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
             Tambah akun
         </a>
     </div>

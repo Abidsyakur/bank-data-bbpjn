@@ -19,14 +19,14 @@
 
     <div class="flex flex-wrap items-start justify-between gap-3">
         <div>
-            <h1 class="text-xl font-semibold">Dashboard</h1>
+            <h1 class="text-xl font-semibold text-primary">Dashboard</h1>
             <p class="mt-1 text-sm text-ink/60">
                 {{ $user->isPimpinan() ? 'Rekapitulasi seluruh layanan' : 'Rekapitulasi layanan yang Anda kelola' }}
             </p>
         </div>
         @if ($user->isPimpinan())
             <a href="{{ route('laporan.index') }}"
-               class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+               class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                 Cetak laporan
             </a>
         @endif

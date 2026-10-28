@@ -19,10 +19,10 @@
     @endphp
 
     <div class="flex flex-wrap items-start justify-between gap-3">
-        <h1 class="text-xl font-semibold">Kelola Dokumen{{ $layanan ? ' - ' . $layanan->nama : '' }}</h1>
+        <h1 class="text-xl font-semibold text-primary">Kelola Dokumen{{ $layanan ? ' - ' . $layanan->nama : '' }}</h1>
         @can('create', \App\Models\Dokumen::class)
             <a href="{{ route('dokumen.create', array_filter(['layanan' => $layanan?->kode])) }}"
-               class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+               class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                 Tambah dokumen
             </a>
         @endcan
@@ -48,7 +48,7 @@
         </div>
         <div class="flex items-center gap-4">
             <button type="submit"
-                    class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                    class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                 Cari
             </button>
             @if ($kata !== '' || $layanan || $status)

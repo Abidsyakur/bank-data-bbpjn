@@ -8,19 +8,20 @@
 @theme {
     --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
 
-    /* Warna logo BBPJN: biru navy #40517e dan kuning #fdca33 */
-    --color-nav: #40517e;
-    --color-nav-deep: #313f62;
-    --color-primary: #40517e;
-    --color-primary-dark: #313f62;
-    --color-accent: #fdca33;
+    /* Warna logo BBPJN: biru #42517c dan kuning #fbcb3a */
+    --color-nav: #42517c;
+    --color-nav-deep: #333f62;
+    --color-primary: #42517c;
+    --color-primary-dark: #333f62;
+    --color-accent: #fbcb3a;
+    --color-accent-dark: #e8b520;
 
     /* Warna status (tetap semantik) */
     --color-alert: #d93a4a;
     --color-ok: #1f7a4d;
     --color-danger: #b3261e;
 
-    --color-concrete: #f3f5f7;
+    --color-concrete: #f0f3f9;
     --color-ink: #1f2a33;
-    --color-line: #d9dee3;
+    --color-line: #d6dbe6;
 }

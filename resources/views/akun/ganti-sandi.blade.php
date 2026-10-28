@@ -7,7 +7,7 @@
         $input = 'mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-sm focus:border-ink focus:outline-2 focus:outline-primary';
     @endphp
 
-    <h1 class="text-2xl font-semibold">Ganti kata sandi</h1>
+    <h1 class="text-2xl font-semibold text-primary">Ganti kata sandi</h1>
 
     <form method="POST" action="{{ route('sandi.update') }}" class="mt-6 max-w-md">
         @csrf
@@ -26,7 +26,7 @@
         <input id="password_confirmation" name="password_confirmation" type="password" required autocomplete="new-password" class="{{ $input }}">
 
         <button type="submit"
-                class="mt-6 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                class="mt-6 rounded-md bg-accent px-4 py-2 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
             Simpan kata sandi
         </button>
     </form>

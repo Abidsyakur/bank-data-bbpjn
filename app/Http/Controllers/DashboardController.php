@@ -68,7 +68,7 @@ class DashboardController extends Controller
                 'datasets' => [[
                     'label'           => 'Dokumen',
                     'data'            => $dataBulan,
-                    'backgroundColor' => '#40517e',
+                    'backgroundColor' => '#42517c',
                     'borderRadius'    => 4,
                 ]],
             ],
@@ -109,7 +109,7 @@ class DashboardController extends Controller
                 'datasets' => [[
                     'label'           => 'Dokumen',
                     'data'            => $arsip->pluck('total')->all(),
-                    'backgroundColor' => '#40517e',
+                    'backgroundColor' => '#42517c',
                     'borderRadius'    => 4,
                 ]],
             ],

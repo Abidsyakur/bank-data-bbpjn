@@ -8,7 +8,7 @@
         $adaFilter = collect($filter)->filter()->isNotEmpty();
     @endphp
 
-    <h1 class="text-xl font-semibold">Riwayat aktivitas</h1>
+    <h1 class="text-xl font-semibold text-primary">Riwayat aktivitas</h1>
     <p class="mt-1 max-w-2xl text-sm text-ink/60">
         Catatan otomatis siapa melakukan apa dan kapan. Data terbaru berada di atas dan tidak dapat diubah dari aplikasi.
     </p>
@@ -47,7 +47,7 @@
         </div>
         <div class="flex items-center gap-4 sm:col-span-2 xl:col-span-1">
             <button type="submit"
-                    class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                    class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                 Terapkan
             </button>
             @if ($adaFilter)

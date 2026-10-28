@@ -16,11 +16,12 @@
     <section class="relative bg-nav px-8 py-10 text-white lg:flex lg:flex-col lg:justify-center lg:px-16">
         {{-- Marka jalan putus-putus di tepi panel --}}
         <div class="absolute inset-y-0 right-0 hidden w-1 lg:block"
-             style="background: repeating-linear-gradient(to bottom, #fdca33 0 28px, transparent 28px 56px)"></div>
+             style="background: repeating-linear-gradient(to bottom, #fbcb3a 0 28px, transparent 28px 56px)"></div>
         <div class="mb-10 w-fit max-w-full rounded-lg bg-white p-4">
-            <img src="{{ asset('images/logo-bbpjn.png') }}" alt="BBPJN Sumatera Selatan" width="270" height="83" class="h-auto w-64 max-w-full">
+            <img src="{{ asset('images/logo-bbpjn.png') }}" alt="BBPJN Sumatera Selatan" width="529" height="153" class="h-auto w-64 max-w-full">
         </div>
         <h1 class="text-3xl font-semibold leading-tight">Bank Data Terpusat</h1>
+        <div class="mt-4 h-1.5 w-20 rounded-full bg-accent"></div>
         <p class="mt-2 max-w-sm text-white/70">Balai Besar Pelaksanaan Jalan Nasional Sumatera Selatan</p>
         <p class="mt-8 max-w-sm text-white/80">
             Arsip PPID, SP4N-LAPOR!, dan JAKI dikelola dalam satu aplikasi.
@@ -54,7 +55,7 @@
             </label>
 
             <button type="submit"
-                    class="mt-6 w-full rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                    class="mt-6 w-full rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-primary hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                 Masuk
             </button>
         </form>
