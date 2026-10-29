@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dokumen;
 use App\Models\Layanan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -45,11 +46,17 @@ class DashboardController extends Controller
             'arsip'              => $arsip->sum('total'),
         ];
 
-        // Dokumen per bulan, 12 bulan terakhir (sintaks DATE_FORMAT khusus MySQL/MariaDB).
+        // Dokumen per bulan, 12 bulan terakhir (ekspresi tanggal menyesuaikan basis data).
         $awal = now()->startOfMonth()->subMonths(11);
+        $ekspresiBulan = match (DB::getDriverName()) {
+            'sqlite' => "strftime('%Y-%m', tanggal)",
+            'pgsql'  => "to_char(tanggal, 'YYYY-MM')",
+            default  => "DATE_FORMAT(tanggal, '%Y-%m')",
+        };
+
         $perBulan = Dokumen::dapatDilihat($user)
             ->where('tanggal', '>=', $awal->toDateString())
-            ->selectRaw("DATE_FORMAT(tanggal, '%Y-%m') as bulan, COUNT(*) as jumlah")
+            ->selectRaw("{$ekspresiBulan} as bulan, COUNT(*) as jumlah")
             ->groupBy('bulan')
             ->pluck('jumlah', 'bulan');
 

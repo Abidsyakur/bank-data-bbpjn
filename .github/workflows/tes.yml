@@ -1,0 +1,60 @@
+name: Tes
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tes:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: bank_data_bbpjn_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, zip, gd, fileinfo, pdo_mysql, pdo_sqlite
+          coverage: pcov
+
+      - name: Pasang dependensi
+        run: |
+          composer install --prefer-dist --no-progress
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Audit keamanan dependensi
+        run: composer audit
+
+      - name: Gaya kode (Pint)
+        run: vendor/bin/pint --test
+
+      - name: Analisis statis (PHPStan)
+        run: vendor/bin/phpstan analyse --memory-limit=1G
+
+      - name: Tes pada SQLite (cepat) dengan coverage
+        run: php artisan test --coverage --min=70
+
+      - name: Tes lengkap pada MySQL (termasuk backup dan restore)
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: bank_data_bbpjn_test
+          DB_USERNAME: root
+          DB_PASSWORD: root
+        run: php artisan test

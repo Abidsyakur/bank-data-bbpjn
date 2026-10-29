@@ -39,8 +39,11 @@ class DokumenController extends Controller
         $dasar = Dokumen::dapatDilihat($user)
             ->when($layanan, fn ($q) => $q->where('layanan_id', $layanan->id))
             ->when($kata !== '', function ($q) use ($kata) {
-                $like = '%' . addcslashes($kata, '%_\\') . '%';
-                $q->where(fn ($w) => $w->where('nomor_surat', 'like', $like)->orWhere('judul', 'like', $like));
+                // Tanda ! sebagai karakter escape: % dan _ diperlakukan sebagai teks biasa di semua basis data.
+                $like = '%' . str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $kata) . '%';
+                $q->where(fn ($w) => $w
+                    ->whereRaw("nomor_surat LIKE ? ESCAPE '!'", [$like])
+                    ->orWhereRaw("judul LIKE ? ESCAPE '!'", [$like]));
             });
 
         $hitung = [
