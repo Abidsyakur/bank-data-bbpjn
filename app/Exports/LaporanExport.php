@@ -2,13 +2,12 @@
 
 namespace App\Exports;
 
+use Maatwebsite\Excel\Concerns\Export;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class LaporanExport implements WithMultipleSheets
+class LaporanExport implements Export, WithMultipleSheets
 {
-    public function __construct(private array $laporan)
-    {
-    }
+    public function __construct(private array $laporan) {}
 
     public function sheets(): array
     {
@@ -21,7 +20,14 @@ class LaporanExport implements WithMultipleSheets
         ])->all();
 
         $r = $this->laporan['ringkasan'];
-        $rekap[] = ['JUMLAH', '', $r['total'], $r['menunggu'], $r['selesai']];
+
+        $rekap[] = [
+            'JUMLAH',
+            '',
+            $r['total'],
+            $r['menunggu'],
+            $r['selesai'],
+        ];
 
         $dokumen = $this->laporan['dokumen']->values()->map(fn ($d, $i) => [
             $i + 1,
@@ -34,8 +40,16 @@ class LaporanExport implements WithMultipleSheets
         ])->all();
 
         return [
-            new TabelSheet('Rekap', ['Layanan', 'Jenis', 'Total', 'Menunggu', 'Selesai'], $rekap),
-            new TabelSheet('Dokumen', ['No', 'Tanggal', 'Nomor surat', 'Judul', 'Layanan', 'Status', 'Diunggah oleh'], $dokumen),
+            new TabelSheet(
+                'Rekap',
+                ['Layanan', 'Jenis', 'Total', 'Menunggu', 'Selesai'],
+                $rekap
+            ),
+            new TabelSheet(
+                'Dokumen',
+                ['No', 'Tanggal', 'Nomor surat', 'Judul', 'Layanan', 'Status', 'Diunggah oleh'],
+                $dokumen
+            ),
         ];
     }
 }

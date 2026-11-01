@@ -71,6 +71,16 @@ composer audit
 npm audit --omit=dev
 ```
 
+## Bila tes gagal karena lingkungan
+
+Jalankan dulu `php artisan test --filter=LingkunganTest`; tes ini menunjuk langsung apa yang kurang.
+
+| Pesan | Penyebab | Penanganan |
+|---|---|---|
+| GD extension is not installed | Ekstensi gd belum aktif pada php.ini yang dipakai CLI | `php --ini` untuk melihat php.ini yang dimuat, hapus tanda `;` pada `extension=gd` dan `extension=zip`, lalu cek `php -m` |
+| Class Barryvdh\DomPDF\Facade\Pdf not found | Paket belum terpasang | `composer require barryvdh/laravel-dompdf maatwebsite/excel` (bila composer mengeluh soal ext-gd atau ext-zip, aktifkan dulu ekstensinya) |
+| /storage/... menghasilkan 403 | Rute penyaji berkas disk lokal Laravel hanya melayani URL bertanda tangan. 403 di pengembangan dan 404 di production berarti akses ditolak | Perilaku yang benar |
+
 ## Batasan
 
 - Tes ini ditulis tanpa dapat dijalankan pada Laravel di lingkungan penulisnya. Sintaks seluruh berkas telah diperiksa, dan tes unit murni telah dijalankan dengan pelari tiruan PHPUnit. Tes fitur perlu dijalankan pertama kali oleh pengembang dan mungkin memerlukan penyesuaian kecil.

@@ -125,10 +125,14 @@ class HakAksesTest extends TestCase
 
     public function test_berkas_privat_tidak_dapat_diakses_lewat_alamat_langsung(): void
     {
-        $this->get('/storage/dokumen/a.pdf')->assertNotFound();
-
         $path = app(BerkasService::class)->simpan(UploadedFile::fake()->create('a.pdf', 10, 'application/pdf'));
         $dokumen = $this->buatDokumen($this->buatUser('admin_pp'), 'perizinan', ['file_path' => $path]);
+
+        // Laravel 11+ menyediakan rute /storage/{path} untuk disk lokal yang hanya melayani URL bertanda tangan:
+        // tanpa tanda tangan jawabannya 403 (pengembangan) atau 404 (production). Keduanya berarti akses ditolak.
+        foreach (['/storage/dokumen/a.pdf', '/storage/' . $path] as $alamat) {
+            $this->assertContains($this->get($alamat)->getStatusCode(), [403, 404], "{$alamat} seharusnya tidak dapat dibuka.");
+        }
 
         $this->get('/' . $path)->assertNotFound();
         $this->get(route('dokumen.berkas', $dokumen))->assertRedirect('/login');
