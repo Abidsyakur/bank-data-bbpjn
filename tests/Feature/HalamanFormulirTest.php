@@ -12,7 +12,7 @@ use Tests\TestCase;
 /** Halaman formulir dan perilaku kecil yang belum tersentuh tes lain. */
 class HalamanFormulirTest extends TestCase
 {
-    use RefreshDatabase, MembuatDataUji;
+    use MembuatDataUji, RefreshDatabase;
 
     protected function setUp(): void
     {
