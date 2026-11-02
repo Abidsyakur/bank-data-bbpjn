@@ -10,14 +10,13 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 /** Satu lembar Excel sederhana: judul, baris judul kolom, dan data. */
-class TabelSheet implements FromArray, WithHeadings, WithTitle, ShouldAutoSize, WithStyles
+class TabelSheet implements FromArray, ShouldAutoSize, WithHeadings, WithStyles, WithTitle
 {
     public function __construct(
         private string $judul,
         private array $kolom,
         private array $baris,
-    ) {
-    }
+    ) {}
 
     public function array(): array
     {

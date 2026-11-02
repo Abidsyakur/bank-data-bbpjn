@@ -14,16 +14,16 @@ class BackupServiceNamaAmanTest extends TestCase
     {
         $metode = new ReflectionMethod(BackupService::class, 'namaAman');
 
-        return $metode->invoke(new BackupService(), $nama);
+        return $metode->invoke(new BackupService, $nama);
     }
 
     public static function jalurAman(): array
     {
         return [
-            'manifest'      => ['manifest.json'],
-            'database'      => ['database.ndjson'],
+            'manifest' => ['manifest.json'],
+            'database' => ['database.ndjson'],
             'folder berkas' => ['berkas/'],
-            'dokumen'       => ['berkas/dokumen/2026/10/a.pdf'],
+            'dokumen' => ['berkas/dokumen/2026/10/a.pdf'],
             'tindak lanjut' => ['berkas/tindak-lanjut/2026/10/b.png'],
         ];
     }
@@ -31,11 +31,11 @@ class BackupServiceNamaAmanTest extends TestCase
     public static function jalurBerbahaya(): array
     {
         return [
-            'kosong'              => [''],
-            'naik direktori'      => ['../evil.txt'],
-            'naik di tengah'      => ['berkas/../../.env'],
-            'jalur mutlak'        => ['/etc/passwd'],
-            'garis miring balik'  => ['berkas\\dokumen\\a.pdf'],
+            'kosong' => [''],
+            'naik direktori' => ['../evil.txt'],
+            'naik di tengah' => ['berkas/../../.env'],
+            'jalur mutlak' => ['/etc/passwd'],
+            'garis miring balik' => ['berkas\\dokumen\\a.pdf'],
             'huruf drive Windows' => ['C:evil.txt'],
             'folder tidak dikenal' => ['lain/file.txt'],
             'subfolder berkas lain' => ['berkas/lain/a.pdf'],

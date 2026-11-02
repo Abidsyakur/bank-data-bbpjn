@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 class DokumenTest extends TestCase
 {
-    use RefreshDatabase, MembuatDataUji;
+    use MembuatDataUji, RefreshDatabase;
 
     private User $pp;
 
@@ -29,10 +29,10 @@ class DokumenTest extends TestCase
     private function data(string $layanan = 'perizinan', array $ubah = []): array
     {
         return array_merge([
-            'layanan_id'  => $this->layanan($layanan)->id,
+            'layanan_id' => $this->layanan($layanan)->id,
             'nomor_surat' => '001/PU/2026',
-            'judul'       => 'Izin Uji',
-            'tanggal'     => '2026-10-01',
+            'judul' => 'Izin Uji',
+            'tanggal' => '2026-10-01',
         ], $ubah);
     }
 

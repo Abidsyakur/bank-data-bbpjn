@@ -1,14 +1,15 @@
 <?php
 
 use App\Http\Controllers\AkunController;
-use App\Http\Controllers\BackupController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\TindakLanjutController;
+use App\Services\BackupService;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dashboard');
@@ -39,7 +40,7 @@ Route::middleware(['auth', 'aktif'])->group(function () {
     // Khusus Pimpinan
     Route::middleware('role:pimpinan')->group(function () {
         // Backup dan restore
-        $pola = \App\Services\BackupService::POLA_NAMA;
+        $pola = BackupService::POLA_NAMA;
         Route::get('backup', [BackupController::class, 'index'])->name('backup.index');
         Route::post('backup', [BackupController::class, 'store'])->name('backup.store');
         Route::post('backup/unggah', [BackupController::class, 'unggah'])->name('backup.unggah');

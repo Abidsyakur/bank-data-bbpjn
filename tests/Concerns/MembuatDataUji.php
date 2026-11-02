@@ -22,11 +22,11 @@ trait MembuatDataUji
         $role = Role::where('kode', $roleKode)->firstOrFail();
 
         return User::create([
-            'role_id'  => $role->id,
-            'nama'     => 'Uji ' . $roleKode,
+            'role_id' => $role->id,
+            'nama' => 'Uji '.$roleKode,
             'username' => $username ?? $roleKode,
             'password' => 'password123',
-            'aktif'    => $aktif,
+            'aktif' => $aktif,
         ]);
     }
 
@@ -40,13 +40,13 @@ trait MembuatDataUji
         $layanan = $this->layanan($kodeLayanan);
 
         return Dokumen::create(array_merge([
-            'user_id'     => $oleh->id,
-            'layanan_id'  => $layanan->id,
+            'user_id' => $oleh->id,
+            'layanan_id' => $layanan->id,
             'nomor_surat' => null,
-            'judul'       => 'Dokumen uji',
-            'tanggal'     => now()->toDateString(),
-            'file_path'   => null,
-            'status'      => $layanan->butuh_tindak_lanjut ? Dokumen::STATUS_MENUNGGU : null,
+            'judul' => 'Dokumen uji',
+            'tanggal' => now()->toDateString(),
+            'file_path' => null,
+            'status' => $layanan->butuh_tindak_lanjut ? Dokumen::STATUS_MENUNGGU : null,
         ], $atribut));
     }
 }

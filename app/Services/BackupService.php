@@ -55,13 +55,13 @@ class BackupService
                 $nama = basename($p);
 
                 return [
-                    'nama'   => $nama,
+                    'nama' => $nama,
                     'ukuran' => $disk->size($p),
-                    'waktu'  => Carbon::createFromTimestamp($disk->lastModified($p), config('app.timezone')),
-                    'jenis'  => match (true) {
+                    'waktu' => Carbon::createFromTimestamp($disk->lastModified($p), config('app.timezone')),
+                    'jenis' => match (true) {
                         str_starts_with($nama, 'pra-restore') => 'Otomatis (sebelum restore)',
-                        str_starts_with($nama, 'unggahan')    => 'Unggahan',
-                        default                               => 'Manual',
+                        str_starts_with($nama, 'unggahan') => 'Unggahan',
+                        default => 'Manual',
                     },
                 ];
             })
@@ -71,27 +71,27 @@ class BackupService
 
     public function ada(string $nama): bool
     {
-        return (bool) preg_match('/^' . self::POLA_NAMA . '$/', $nama)
-            && $this->disk()->exists(self::DIR . '/' . $nama);
+        return (bool) preg_match('/^'.self::POLA_NAMA.'$/', $nama)
+            && $this->disk()->exists(self::DIR.'/'.$nama);
     }
 
     public function jalur(string $nama): string
     {
         abort_unless($this->ada($nama), 404);
 
-        return $this->disk()->path(self::DIR . '/' . $nama);
+        return $this->disk()->path(self::DIR.'/'.$nama);
     }
 
     public function hapus(string $nama): void
     {
         if ($this->ada($nama)) {
-            $this->disk()->delete(self::DIR . '/' . $nama);
+            $this->disk()->delete(self::DIR.'/'.$nama);
         }
     }
 
     public function simpanUnggahan(UploadedFile $file): string
     {
-        $nama = 'unggahan-' . now()->format('Ymd-His') . '.zip';
+        $nama = 'unggahan-'.now()->format('Ymd-His').'.zip';
         $file->storeAs(self::DIR, $nama, 'local');
 
         return $nama;
@@ -103,10 +103,10 @@ class BackupService
         @set_time_limit(0);
 
         $disk = $this->disk();
-        $disk->makeDirectory(self::DIR . '/tmp');
+        $disk->makeDirectory(self::DIR.'/tmp');
 
-        $nama = $awalan . '-' . now()->format('Ymd-His') . '.zip';
-        $tmp  = $disk->path(self::DIR . '/tmp/db-' . Str::random(10) . '.ndjson');
+        $nama = $awalan.'-'.now()->format('Ymd-His').'.zip';
+        $tmp = $disk->path(self::DIR.'/tmp/db-'.Str::random(10).'.ndjson');
 
         try {
             $h = fopen($tmp, 'wb');
@@ -122,7 +122,7 @@ class BackupService
                         fwrite($h, json_encode(
                             ['t' => $t, 'r' => (array) $row],
                             JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR
-                        ) . "\n");
+                        )."\n");
                         $jumlah++;
                     }
                 });
@@ -135,34 +135,34 @@ class BackupService
             foreach (self::FOLDER_BERKAS as $folder) {
                 foreach ($disk->allFiles($folder) as $p) {
                     $berkas[] = $p;
-                    $ukuran  += $disk->size($p);
+                    $ukuran += $disk->size($p);
                 }
             }
 
             $manifest = [
-                'aplikasi'        => 'bank-data-bbpjn',
-                'versi'           => 1,
-                'dibuat'          => now()->toIso8601String(),
-                'dibuat_oleh'     => $oleh?->nama,
-                'tabel'           => $tabel,
-                'berkas'          => ['jumlah' => count($berkas), 'ukuran' => $ukuran],
+                'aplikasi' => 'bank-data-bbpjn',
+                'versi' => 1,
+                'dibuat' => now()->toIso8601String(),
+                'dibuat_oleh' => $oleh?->nama,
+                'tabel' => $tabel,
+                'berkas' => ['jumlah' => count($berkas), 'ukuran' => $ukuran],
                 'sha256_database' => hash_file('sha256', $tmp),
             ];
 
-            $zip = new ZipArchive();
-            if ($zip->open($disk->path(self::DIR . '/' . $nama), ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+            $zip = new ZipArchive;
+            if ($zip->open($disk->path(self::DIR.'/'.$nama), ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
                 throw new RuntimeException('Tidak dapat membuat berkas backup.');
             }
             $zip->addFromString('manifest.json', json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
             $zip->addFile($tmp, 'database.ndjson');
             foreach ($berkas as $p) {
-                $zip->addFile($disk->path($p), 'berkas/' . $p);
+                $zip->addFile($disk->path($p), 'berkas/'.$p);
             }
             if (! $zip->close()) {
                 throw new RuntimeException('Gagal menyelesaikan berkas backup. Periksa ruang penyimpanan.');
             }
         } catch (Throwable $e) {
-            $disk->delete(self::DIR . '/' . $nama);
+            $disk->delete(self::DIR.'/'.$nama);
             throw $e;
         } finally {
             if (is_file($tmp)) {
@@ -176,7 +176,7 @@ class BackupService
     /** Memeriksa berkas backup tanpa mengubah apa pun. Mengembalikan manifest. */
     public function periksa(string $nama): array
     {
-        $zip = new ZipArchive();
+        $zip = new ZipArchive;
         if ($zip->open($this->jalur($nama)) !== true) {
             throw new RuntimeException('Berkas bukan arsip ZIP yang valid.');
         }
@@ -227,18 +227,18 @@ class BackupService
 
         $manifest = $this->periksa($nama);
         $disk = $this->disk();
-        $kerja = $disk->path(self::DIR . '/tmp/restore-' . now()->format('Ymd-His') . '-' . Str::random(6));
-        $lama = $kerja . '/lama';
+        $kerja = $disk->path(self::DIR.'/tmp/restore-'.now()->format('Ymd-His').'-'.Str::random(6));
+        $lama = $kerja.'/lama';
         File::ensureDirectoryExists($kerja);
 
         try {
-            $zip = new ZipArchive();
+            $zip = new ZipArchive;
             if ($zip->open($this->jalur($nama)) !== true || ! $zip->extractTo($kerja)) {
                 throw new RuntimeException('Gagal membuka isi berkas backup.');
             }
             $zip->close();
 
-            $ndjson = $kerja . '/database.ndjson';
+            $ndjson = $kerja.'/database.ndjson';
             if (! is_file($ndjson) || ! hash_equals((string) ($manifest['sha256_database'] ?? ''), hash_file('sha256', $ndjson))) {
                 throw new RuntimeException('Data pada backup rusak (checksum tidak cocok).');
             }
@@ -330,11 +330,11 @@ class BackupService
 
         foreach (self::FOLDER_BERKAS as $f) {
             $sekarang = $this->disk()->path($f);
-            $baru = $kerja . '/berkas/' . $f;
+            $baru = $kerja.'/berkas/'.$f;
             $this->tukar[$f] = ['lama' => false, 'baru' => false];
 
             if (is_dir($sekarang)) {
-                if (! rename($sekarang, $lama . '/' . $f)) {
+                if (! rename($sekarang, $lama.'/'.$f)) {
                     throw new RuntimeException('Gagal memindahkan berkas arsip yang lama.');
                 }
                 $this->tukar[$f]['lama'] = true;
@@ -357,8 +357,8 @@ class BackupService
             if ($status['baru'] && is_dir($sekarang)) {
                 File::deleteDirectory($sekarang);
             }
-            if ($status['lama'] && is_dir($lama . '/' . $f)) {
-                rename($lama . '/' . $f, $sekarang);
+            if ($status['lama'] && is_dir($lama.'/'.$f)) {
+                rename($lama.'/'.$f, $sekarang);
             }
         }
 

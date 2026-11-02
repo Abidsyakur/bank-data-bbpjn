@@ -36,12 +36,12 @@ class LayananSeeder extends Seeder
             DB::table('layanan')->updateOrInsert(
                 ['kode' => $kode],
                 [
-                    'role_id'             => $roleId[$role],
-                    'nama'                => $nama,
-                    'is_pengaduan'        => $isPengaduan,
+                    'role_id' => $roleId[$role],
+                    'nama' => $nama,
+                    'is_pengaduan' => $isPengaduan,
                     'butuh_tindak_lanjut' => $butuhTl,
-                    'created_at'          => now(),
-                    'updated_at'          => now(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ]
             );
         }

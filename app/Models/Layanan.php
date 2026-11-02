@@ -16,7 +16,7 @@ class Layanan extends Model
     protected function casts(): array
     {
         return [
-            'is_pengaduan'        => 'boolean',
+            'is_pengaduan' => 'boolean',
             'butuh_tindak_lanjut' => 'boolean',
         ];
     }

@@ -13,6 +13,7 @@ use Tests\TestCase;
 class DokumenPolicyTest extends TestCase
 {
     private const ROLE_PP = 2;
+
     private const ROLE_SP4N = 3;
 
     private function user(string $kode, int $roleId): User
@@ -25,7 +26,7 @@ class DokumenPolicyTest extends TestCase
 
     private function dokumenMilik(int $roleIdLayanan): Dokumen
     {
-        $dokumen = new Dokumen();
+        $dokumen = new Dokumen;
         $dokumen->setRelation('layanan', new Layanan(['role_id' => $roleIdLayanan]));
 
         return $dokumen;
@@ -33,13 +34,13 @@ class DokumenPolicyTest extends TestCase
 
     public function test_semua_pengguna_boleh_membuka_daftar(): void
     {
-        $this->assertTrue((new DokumenPolicy())->viewAny($this->user('admin_pp', self::ROLE_PP)));
-        $this->assertTrue((new DokumenPolicy())->viewAny($this->user('pimpinan', 1)));
+        $this->assertTrue((new DokumenPolicy)->viewAny($this->user('admin_pp', self::ROLE_PP)));
+        $this->assertTrue((new DokumenPolicy)->viewAny($this->user('pimpinan', 1)));
     }
 
     public function test_pimpinan_hanya_boleh_melihat(): void
     {
-        $policy = new DokumenPolicy();
+        $policy = new DokumenPolicy;
         $pimpinan = $this->user('pimpinan', 1);
         $dokumen = $this->dokumenMilik(self::ROLE_PP);
 
@@ -51,7 +52,7 @@ class DokumenPolicyTest extends TestCase
 
     public function test_admin_pemilik_layanan_boleh_mengelola_dokumennya(): void
     {
-        $policy = new DokumenPolicy();
+        $policy = new DokumenPolicy;
         $admin = $this->user('admin_pp', self::ROLE_PP);
         $dokumen = $this->dokumenMilik(self::ROLE_PP);
 
@@ -63,7 +64,7 @@ class DokumenPolicyTest extends TestCase
 
     public function test_admin_tidak_boleh_menyentuh_dokumen_layanan_lain(): void
     {
-        $policy = new DokumenPolicy();
+        $policy = new DokumenPolicy;
         $admin = $this->user('admin_sp4n', self::ROLE_SP4N);
         $dokumen = $this->dokumenMilik(self::ROLE_PP);
 

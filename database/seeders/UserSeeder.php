@@ -27,10 +27,10 @@ class UserSeeder extends Seeder
             DB::table('users')->updateOrInsert(
                 ['username' => $username],
                 [
-                    'role_id'    => $roleId[$role],
-                    'nama'       => $nama,
-                    'password'   => Hash::make('password'),
-                    'aktif'      => true,
+                    'role_id' => $roleId[$role],
+                    'nama' => $nama,
+                    'password' => Hash::make('password'),
+                    'aktif' => true,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]

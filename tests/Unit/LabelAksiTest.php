@@ -45,7 +45,7 @@ class LabelAksiTest extends TestCase
      */
     public function test_semua_aksi_yang_dicatat_aplikasi_memiliki_label(): void
     {
-        $akar = dirname(__DIR__, 2) . '/app';
+        $akar = dirname(__DIR__, 2).'/app';
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($akar, FilesystemIterator::SKIP_DOTS));
 
         $ditemukan = [];

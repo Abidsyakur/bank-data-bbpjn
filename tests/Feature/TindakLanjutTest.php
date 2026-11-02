@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 class TindakLanjutTest extends TestCase
 {
-    use RefreshDatabase, MembuatDataUji;
+    use MembuatDataUji, RefreshDatabase;
 
     private User $pp;
 

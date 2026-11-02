@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class HakAksesTest extends TestCase
 {
-    use RefreshDatabase, MembuatDataUji;
+    use MembuatDataUji, RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -61,8 +61,8 @@ class HakAksesTest extends TestCase
         $this->get(route('dokumen.edit', $dokumenSp4n))->assertForbidden();
         $this->put(route('dokumen.update', $dokumenSp4n), [
             'layanan_id' => $this->layanan('perizinan')->id,
-            'judul'      => 'Dibajak',
-            'tanggal'    => '2026-10-01',
+            'judul' => 'Dibajak',
+            'tanggal' => '2026-10-01',
         ])->assertForbidden();
         $this->delete(route('dokumen.destroy', $dokumenSp4n))->assertForbidden();
 
@@ -114,8 +114,8 @@ class HakAksesTest extends TestCase
         $this->get(route('dokumen.create'))->assertForbidden();
         $this->post(route('dokumen.store'), [
             'layanan_id' => $this->layanan('perizinan')->id,
-            'judul'      => 'Tidak boleh',
-            'tanggal'    => '2026-10-01',
+            'judul' => 'Tidak boleh',
+            'tanggal' => '2026-10-01',
         ])->assertForbidden();
         $this->get(route('dokumen.edit', $dokumen))->assertForbidden();
         $this->delete(route('dokumen.destroy', $dokumen))->assertForbidden();
@@ -130,11 +130,11 @@ class HakAksesTest extends TestCase
 
         // Laravel 11+ menyediakan rute /storage/{path} untuk disk lokal yang hanya melayani URL bertanda tangan:
         // tanpa tanda tangan jawabannya 403 (pengembangan) atau 404 (production). Keduanya berarti akses ditolak.
-        foreach (['/storage/dokumen/a.pdf', '/storage/' . $path] as $alamat) {
+        foreach (['/storage/dokumen/a.pdf', '/storage/'.$path] as $alamat) {
             $this->assertContains($this->get($alamat)->getStatusCode(), [403, 404], "{$alamat} seharusnya tidak dapat dibuka.");
         }
 
-        $this->get('/' . $path)->assertNotFound();
+        $this->get('/'.$path)->assertNotFound();
         $this->get(route('dokumen.berkas', $dokumen))->assertRedirect('/login');
     }
 

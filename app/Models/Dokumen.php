@@ -13,7 +13,8 @@ class Dokumen extends Model
     use SoftDeletes;
 
     public const STATUS_MENUNGGU = 'menunggu';
-    public const STATUS_SELESAI  = 'selesai';
+
+    public const STATUS_SELESAI = 'selesai';
 
     protected $table = 'dokumen';
 
@@ -53,8 +54,8 @@ class Dokumen extends Model
     {
         return match ($this->status) {
             self::STATUS_MENUNGGU => 'Menunggu',
-            self::STATUS_SELESAI  => 'Selesai',
-            default               => '-',
+            self::STATUS_SELESAI => 'Selesai',
+            default => '-',
         };
     }
 }

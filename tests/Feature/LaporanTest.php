@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class LaporanTest extends TestCase
 {
-    use RefreshDatabase, MembuatDataUji;
+    use MembuatDataUji, RefreshDatabase;
 
     protected function setUp(): void
     {

@@ -28,9 +28,9 @@ class AkunController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'nama'     => ['required', 'string', 'max:100'],
+            'nama' => ['required', 'string', 'max:100'],
             'username' => ['required', 'alpha_dash', 'max:50', 'unique:users,username'],
-            'role_id'  => ['required', 'exists:roles,id'],
+            'role_id' => ['required', 'exists:roles,id'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], PesanValidasi::pesan(), PesanValidasi::atribut());
 
@@ -43,7 +43,7 @@ class AkunController extends Controller
     public function edit(User $user): View
     {
         return view('akun.edit', [
-            'user'  => $user,
+            'user' => $user,
             'roles' => Role::orderBy('id')->get(),
         ]);
     }
@@ -51,9 +51,9 @@ class AkunController extends Controller
     public function update(Request $request, User $user): RedirectResponse
     {
         $data = $request->validate([
-            'nama'     => ['required', 'string', 'max:100'],
+            'nama' => ['required', 'string', 'max:100'],
             'username' => ['required', 'alpha_dash', 'max:50', Rule::unique('users', 'username')->ignore($user->id)],
-            'role_id'  => ['required', 'exists:roles,id'],
+            'role_id' => ['required', 'exists:roles,id'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ], PesanValidasi::pesan(), PesanValidasi::atribut());
 
@@ -86,6 +86,6 @@ class AkunController extends Controller
         $aksi = $user->aktif ? 'akun.aktifkan' : 'akun.nonaktifkan';
         ActivityLogger::catat($aksi, "Akun {$user->username}");
 
-        return back()->with('status', 'Akun ' . $user->username . ($user->aktif ? ' diaktifkan.' : ' dinonaktifkan.'));
+        return back()->with('status', 'Akun '.$user->username.($user->aktif ? ' diaktifkan.' : ' dinonaktifkan.'));
     }
 }

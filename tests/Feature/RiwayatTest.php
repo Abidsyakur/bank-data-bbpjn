@@ -11,9 +11,10 @@ use Tests\TestCase;
 
 class RiwayatTest extends TestCase
 {
-    use RefreshDatabase, MembuatDataUji;
+    use MembuatDataUji, RefreshDatabase;
 
     private User $pimpinan;
+
     private User $pp;
 
     protected function setUp(): void
@@ -59,7 +60,7 @@ class RiwayatTest extends TestCase
         ActivityLogger::catat('login', null, null, $this->pp->id);
         ActivityLogger::catat('login', null, null, $this->pimpinan->id);
 
-        $log = $this->actingAs($this->pimpinan)->get('/riwayat?pengguna=' . $this->pp->id)->viewData('log');
+        $log = $this->actingAs($this->pimpinan)->get('/riwayat?pengguna='.$this->pp->id)->viewData('log');
 
         $this->assertCount(1, $log);
         $this->assertSame($this->pp->username, $log->first()->username);

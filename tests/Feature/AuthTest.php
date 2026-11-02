@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
-    use RefreshDatabase, MembuatDataUji;
+    use MembuatDataUji, RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -109,8 +109,8 @@ class AuthTest extends TestCase
         $user = $this->buatUser('admin_pp');
 
         $this->actingAs($user)->put('/ganti-sandi', [
-            'current_password'      => 'password123',
-            'password'              => 'sandi-baru-123',
+            'current_password' => 'password123',
+            'password' => 'sandi-baru-123',
             'password_confirmation' => 'sandi-baru-123',
         ])->assertRedirect(route('sandi.edit'))->assertSessionHas('status');
 
@@ -123,8 +123,8 @@ class AuthTest extends TestCase
         $user = $this->buatUser('admin_pp');
 
         $this->actingAs($user)->put('/ganti-sandi', [
-            'current_password'      => 'bukan-sandi-saya',
-            'password'              => 'sandi-baru-123',
+            'current_password' => 'bukan-sandi-saya',
+            'password' => 'sandi-baru-123',
             'password_confirmation' => 'sandi-baru-123',
         ])->assertSessionHasErrors(['current_password' => 'Kata sandi saat ini salah.']);
 
@@ -136,8 +136,8 @@ class AuthTest extends TestCase
         $user = $this->buatUser('admin_pp');
 
         $this->actingAs($user)->put('/ganti-sandi', [
-            'current_password'      => 'password123',
-            'password'              => 'abc',
+            'current_password' => 'password123',
+            'password' => 'abc',
             'password_confirmation' => 'abc',
         ])->assertSessionHasErrors(['password' => 'Kata sandi minimal 8 karakter.']);
     }
@@ -147,8 +147,8 @@ class AuthTest extends TestCase
         $user = $this->buatUser('admin_pp');
 
         $this->actingAs($user)->put('/ganti-sandi', [
-            'current_password'      => 'password123',
-            'password'              => 'sandi-baru-123',
+            'current_password' => 'password123',
+            'password' => 'sandi-baru-123',
             'password_confirmation' => 'sandi-lain-456',
         ])->assertSessionHasErrors('password');
     }

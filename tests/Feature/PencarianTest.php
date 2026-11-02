@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class PencarianTest extends TestCase
 {
-    use RefreshDatabase, MembuatDataUji;
+    use MembuatDataUji, RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -33,7 +33,7 @@ class PencarianTest extends TestCase
 
     public function test_cari_berdasarkan_nomor_surat(): void
     {
-        $respons = $this->actingAs($this->buatUser('pimpinan'))->get('/dokumen?q=' . urlencode('001/PU'));
+        $respons = $this->actingAs($this->buatUser('pimpinan'))->get('/dokumen?q='.urlencode('001/PU'));
 
         $this->assertSame(['Izin Jembatan'], $this->judulHasil($respons));
     }
@@ -86,8 +86,8 @@ class PencarianTest extends TestCase
     {
         $this->actingAs($this->buatUser('pimpinan'));
 
-        $this->assertSame(['Aduan 100% rusak'], $this->judulHasil($this->get('/dokumen?q=' . urlencode('%'))));
-        $this->assertSame([], $this->judulHasil($this->get('/dokumen?q=' . urlencode('_'))));
+        $this->assertSame(['Aduan 100% rusak'], $this->judulHasil($this->get('/dokumen?q='.urlencode('%'))));
+        $this->assertSame([], $this->judulHasil($this->get('/dokumen?q='.urlencode('_'))));
     }
 
     public function test_tanda_seru_sebagai_karakter_escape_tidak_merusak_pencarian(): void
@@ -95,7 +95,7 @@ class PencarianTest extends TestCase
         $this->actingAs($this->buatUser('pimpinan'));
         $this->buatDokumen($this->buatUser('admin_pp', 'pp3'), 'perizinan', ['judul' => 'Penting! Segera']);
 
-        $this->assertSame(['Penting! Segera'], $this->judulHasil($this->get('/dokumen?q=' . urlencode('Penting!'))));
+        $this->assertSame(['Penting! Segera'], $this->judulHasil($this->get('/dokumen?q='.urlencode('Penting!'))));
     }
 
     public function test_jumlah_pada_tab_mengikuti_hasil_pencarian(): void

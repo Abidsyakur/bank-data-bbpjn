@@ -17,9 +17,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DokumenController extends Controller
 {
-    public function __construct(private BerkasService $berkasService)
-    {
-    }
+    public function __construct(private BerkasService $berkasService) {}
 
     public function index(Request $request): View
     {
@@ -40,16 +38,16 @@ class DokumenController extends Controller
             ->when($layanan, fn ($q) => $q->where('layanan_id', $layanan->id))
             ->when($kata !== '', function ($q) use ($kata) {
                 // Tanda ! sebagai karakter escape: % dan _ diperlakukan sebagai teks biasa di semua basis data.
-                $like = '%' . str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $kata) . '%';
+                $like = '%'.str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $kata).'%';
                 $q->where(fn ($w) => $w
                     ->whereRaw("nomor_surat LIKE ? ESCAPE '!'", [$like])
                     ->orWhereRaw("judul LIKE ? ESCAPE '!'", [$like]));
             });
 
         $hitung = [
-            'semua'    => (clone $dasar)->count(),
+            'semua' => (clone $dasar)->count(),
             'menunggu' => (clone $dasar)->where('status', Dokumen::STATUS_MENUNGGU)->count(),
-            'selesai'  => (clone $dasar)->where('status', Dokumen::STATUS_SELESAI)->count(),
+            'selesai' => (clone $dasar)->where('status', Dokumen::STATUS_SELESAI)->count(),
         ];
 
         $status = in_array($request->query('status'), [Dokumen::STATUS_MENUNGGU, Dokumen::STATUS_SELESAI], true)
@@ -89,13 +87,13 @@ class DokumenController extends Controller
             : null;
 
         $dokumen = Dokumen::create([
-            'user_id'     => $request->user()->id,
-            'layanan_id'  => $layanan->id,
+            'user_id' => $request->user()->id,
+            'layanan_id' => $layanan->id,
             'nomor_surat' => $data['nomor_surat'] ?? null,
-            'judul'       => $data['judul'],
-            'tanggal'     => $data['tanggal'],
-            'file_path'   => $path,
-            'status'      => $layanan->butuh_tindak_lanjut ? Dokumen::STATUS_MENUNGGU : null,
+            'judul' => $data['judul'],
+            'tanggal' => $data['tanggal'],
+            'file_path' => $path,
+            'status' => $layanan->butuh_tindak_lanjut ? Dokumen::STATUS_MENUNGGU : null,
         ]);
 
         ActivityLogger::catat('dokumen.tambah', $this->ringkas($dokumen), $dokumen->id);
@@ -110,8 +108,8 @@ class DokumenController extends Controller
         $dokumen->load(['layanan', 'user']);
 
         return view('dokumen.show', [
-            'dokumen'      => $dokumen,
-            'adaBerkas'    => $this->berkasService->ada($dokumen->file_path),
+            'dokumen' => $dokumen,
+            'adaBerkas' => $this->berkasService->ada($dokumen->file_path),
             'tindakLanjut' => $dokumen->tindakLanjut()->with('user')->orderByDesc('tanggal')->orderByDesc('id')->get(),
         ]);
     }
@@ -123,9 +121,9 @@ class DokumenController extends Controller
         $layananList = Layanan::untukUser($request->user())->orderBy('nama')->get();
 
         return view('dokumen.edit', [
-            'dokumen'     => $dokumen,
+            'dokumen' => $dokumen,
             'layananList' => $layananList,
-            'adaBerkas'   => $this->berkasService->ada($dokumen->file_path),
+            'adaBerkas' => $this->berkasService->ada($dokumen->file_path),
         ]);
     }
 
@@ -148,12 +146,12 @@ class DokumenController extends Controller
             : $pathLama;
 
         $dokumen->update([
-            'layanan_id'  => $layanan->id,
+            'layanan_id' => $layanan->id,
             'nomor_surat' => $data['nomor_surat'] ?? null,
-            'judul'       => $data['judul'],
-            'tanggal'     => $data['tanggal'],
-            'file_path'   => $pathBaru,
-            'status'      => $status,
+            'judul' => $data['judul'],
+            'tanggal' => $data['tanggal'],
+            'file_path' => $pathBaru,
+            'status' => $status,
         ]);
 
         if ($pathBaru !== $pathLama) {
@@ -182,8 +180,8 @@ class DokumenController extends Controller
         Gate::authorize('view', $dokumen);
         abort_unless($this->berkasService->ada($dokumen->file_path), 404);
 
-        $nama = Str::slug($dokumen->nomor_surat ?: $dokumen->judul) ?: 'dokumen-' . $dokumen->id;
-        $nama .= '.' . pathinfo($dokumen->file_path, PATHINFO_EXTENSION);
+        $nama = Str::slug($dokumen->nomor_surat ?: $dokumen->judul) ?: 'dokumen-'.$dokumen->id;
+        $nama .= '.'.pathinfo($dokumen->file_path, PATHINFO_EXTENSION);
 
         if ($request->boolean('unduh')) {
             ActivityLogger::catat('dokumen.unduh', $this->ringkas($dokumen), $dokumen->id);
@@ -197,16 +195,16 @@ class DokumenController extends Controller
     private function validasi(Request $request): array
     {
         return $request->validate([
-            'layanan_id'  => ['required', Rule::exists('layanan', 'id')->where('role_id', $request->user()->role_id)],
+            'layanan_id' => ['required', Rule::exists('layanan', 'id')->where('role_id', $request->user()->role_id)],
             'nomor_surat' => ['nullable', 'string', 'max:100'],
-            'judul'       => ['required', 'string', 'max:255'],
-            'tanggal'     => ['required', 'date'],
-            'berkas'      => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+            'judul' => ['required', 'string', 'max:255'],
+            'tanggal' => ['required', 'date'],
+            'berkas' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
         ], PesanValidasi::pesan(), PesanValidasi::atribut());
     }
 
     private function ringkas(Dokumen $dokumen): string
     {
-        return trim(($dokumen->nomor_surat ? $dokumen->nomor_surat . ' - ' : '') . $dokumen->judul);
+        return trim(($dokumen->nomor_surat ? $dokumen->nomor_surat.' - ' : '').$dokumen->judul);
     }
 }

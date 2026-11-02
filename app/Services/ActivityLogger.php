@@ -24,11 +24,11 @@ class ActivityLogger
         }
 
         DB::table('log_aktivitas')->insert([
-            'user_id'     => $userId,
-            'dokumen_id'  => $dokumenId,
-            'aksi'        => $aksi,
-            'keterangan'  => $keterangan !== null ? mb_substr($keterangan, 0, 255) : null,
-            'waktu'       => now(),
+            'user_id' => $userId,
+            'dokumen_id' => $dokumenId,
+            'aksi' => $aksi,
+            'keterangan' => $keterangan !== null ? mb_substr($keterangan, 0, 255) : null,
+            'waktu' => now(),
         ]);
     }
 }

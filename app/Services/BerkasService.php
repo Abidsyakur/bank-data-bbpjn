@@ -17,8 +17,8 @@ class BerkasService
 
     public function simpan(UploadedFile $file, string $folder = 'dokumen'): string
     {
-        $folder = $folder . '/' . now()->format('Y/m');
-        $nama   = Str::uuid() . '.' . $file->extension();
+        $folder = $folder.'/'.now()->format('Y/m');
+        $nama = Str::uuid().'.'.$file->extension();
 
         return $file->storeAs($folder, $nama, self::DISK);
     }

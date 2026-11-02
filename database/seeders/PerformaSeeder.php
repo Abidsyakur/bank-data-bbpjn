@@ -41,23 +41,23 @@ class PerformaSeeder extends Seeder
             $tanggal = now()->subDays(random_int(0, 400));
 
             $dokumen[] = [
-                'user_id'     => $userId,
-                'layanan_id'  => $l->id,
+                'user_id' => $userId,
+                'layanan_id' => $l->id,
                 'nomor_surat' => sprintf('%05d/PERF/%d', $i, $tanggal->year),
-                'judul'       => "[PERFORMA] Dokumen contoh {$i}",
-                'tanggal'     => $tanggal->toDateString(),
-                'file_path'   => null,
-                'status'      => $l->butuh_tindak_lanjut ? (random_int(0, 9) < 6 ? 'selesai' : 'menunggu') : null,
-                'created_at'  => $tanggal,
-                'updated_at'  => $tanggal,
+                'judul' => "[PERFORMA] Dokumen contoh {$i}",
+                'tanggal' => $tanggal->toDateString(),
+                'file_path' => null,
+                'status' => $l->butuh_tindak_lanjut ? (random_int(0, 9) < 6 ? 'selesai' : 'menunggu') : null,
+                'created_at' => $tanggal,
+                'updated_at' => $tanggal,
             ];
 
             $log[] = [
-                'user_id'    => $userId,
+                'user_id' => $userId,
                 'dokumen_id' => null,
-                'aksi'       => 'dokumen.tambah',
+                'aksi' => 'dokumen.tambah',
                 'keterangan' => "[PERFORMA] contoh {$i}",
-                'waktu'      => $tanggal,
+                'waktu' => $tanggal,
             ];
 
             if (count($dokumen) === 1000) {

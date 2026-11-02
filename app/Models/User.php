@@ -20,7 +20,7 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
-            'aktif'    => 'boolean',
+            'aktif' => 'boolean',
         ];
     }
 

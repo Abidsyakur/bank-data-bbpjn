@@ -19,9 +19,7 @@ use Throwable;
 /** Khusus Pimpinan (dijaga middleware role:pimpinan di routes). */
 class BackupController extends Controller
 {
-    public function __construct(private BackupService $backup)
-    {
-    }
+    public function __construct(private BackupService $backup) {}
 
     public function index(): View
     {
@@ -42,7 +40,7 @@ class BackupController extends Controller
             try {
                 $nama = $this->backup->buat('backup', $request->user());
             } catch (RuntimeException $e) {
-                return back()->withErrors(['akun' => 'Backup gagal dibuat: ' . $e->getMessage()]);
+                return back()->withErrors(['akun' => 'Backup gagal dibuat: '.$e->getMessage()]);
             } catch (Throwable $e) {
                 report($e);
 
@@ -111,7 +109,7 @@ class BackupController extends Controller
 
         $request->validate([
             'konfirmasi' => ['required', Rule::in(['PULIHKAN'])],
-            'password'   => ['required', 'current_password'],
+            'password' => ['required', 'current_password'],
         ], PesanValidasi::pesan(), PesanValidasi::atribut());
 
         $idUser = $request->user()->id;
@@ -121,7 +119,7 @@ class BackupController extends Controller
                 $pra = $this->backup->pulihkan($berkas, $request->user());
             } catch (RuntimeException $e) {
                 return redirect()->route('backup.konfirmasi', $berkas)
-                    ->withErrors(['akun' => 'Pemulihan dibatalkan dan data tidak diubah: ' . $e->getMessage()]);
+                    ->withErrors(['akun' => 'Pemulihan dibatalkan dan data tidak diubah: '.$e->getMessage()]);
             } catch (Throwable $e) {
                 report($e);
 
@@ -152,10 +150,10 @@ class BackupController extends Controller
     private function catatRiwayat(int $userId, string $jenis, string $berkas): void
     {
         DB::table('backup')->insert([
-            'user_id'   => $userId,
-            'jenis'     => $jenis,
+            'user_id' => $userId,
+            'jenis' => $jenis,
             'file_path' => $berkas,
-            'waktu'     => now(),
+            'waktu' => now(),
         ]);
     }
 

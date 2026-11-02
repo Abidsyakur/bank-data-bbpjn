@@ -28,7 +28,7 @@ class LoginController extends Controller
             [
                 'username' => $credentials['username'],
                 'password' => $credentials['password'],
-                'aktif'    => true,
+                'aktif' => true,
             ],
             $request->boolean('remember')
         );

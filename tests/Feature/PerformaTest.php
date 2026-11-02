@@ -16,7 +16,7 @@ use Tests\TestCase;
  */
 class PerformaTest extends TestCase
 {
-    use RefreshDatabase, MembuatDataUji;
+    use MembuatDataUji, RefreshDatabase;
 
     private User $pimpinan;
 
@@ -35,7 +35,7 @@ class PerformaTest extends TestCase
 
     private function isiMassal(int $jumlah): void
     {
-        $pp = $this->buatUser('admin_pp', 'pp_massal_' . random_int(1, 999999));
+        $pp = $this->buatUser('admin_pp', 'pp_massal_'.random_int(1, 999999));
         $layanan = DB::table('layanan')->get();
         $baris = [];
         $log = [];
@@ -43,14 +43,14 @@ class PerformaTest extends TestCase
         for ($i = 0; $i < $jumlah; $i++) {
             $l = $layanan[$i % $layanan->count()];
             $baris[] = [
-                'user_id' => $pp->id, 'layanan_id' => $l->id, 'nomor_surat' => 'NS-' . random_int(1, 99999),
-                'judul' => 'Dokumen massal ' . $i, 'tanggal' => now()->subDays($i % 300)->toDateString(),
+                'user_id' => $pp->id, 'layanan_id' => $l->id, 'nomor_surat' => 'NS-'.random_int(1, 99999),
+                'judul' => 'Dokumen massal '.$i, 'tanggal' => now()->subDays($i % 300)->toDateString(),
                 'file_path' => null, 'status' => $l->butuh_tindak_lanjut ? ($i % 2 ? 'menunggu' : 'selesai') : null,
                 'created_at' => now(), 'updated_at' => now(),
             ];
             $log[] = [
                 'user_id' => $pp->id, 'dokumen_id' => null, 'aksi' => 'dokumen.tambah',
-                'keterangan' => 'massal ' . $i, 'waktu' => now()->subMinutes($i),
+                'keterangan' => 'massal '.$i, 'waktu' => now()->subMinutes($i),
             ];
         }
 

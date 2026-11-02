@@ -20,7 +20,7 @@ class PasswordController extends Controller
     {
         $data = $request->validate([
             'current_password' => ['required', 'current_password'],
-            'password'         => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], PesanValidasi::pesan(), PesanValidasi::atribut());
 
         $request->user()->update(['password' => $data['password']]);

@@ -27,9 +27,9 @@ class LaporanService
             ->when($f['layanan'], fn ($q) => $q->where('kode', $f['layanan']))
             ->orderBy('nama')
             ->withCount([
-                'dokumen as total'    => fn ($q) => $terapkan($q),
+                'dokumen as total' => fn ($q) => $terapkan($q),
                 'dokumen as menunggu' => fn ($q) => $terapkan($q)->where('status', Dokumen::STATUS_MENUNGGU),
-                'dokumen as selesai'  => fn ($q) => $terapkan($q)->where('status', Dokumen::STATUS_SELESAI),
+                'dokumen as selesai' => fn ($q) => $terapkan($q)->where('status', Dokumen::STATUS_SELESAI),
             ])
             ->get();
 
@@ -42,15 +42,15 @@ class LaporanService
         $pengaduan = $rekap->where('is_pengaduan', true);
 
         return [
-            'filter'    => $f,
-            'periode'   => $this->periode($f),
-            'kategori'  => $f['layanan'] ? ($rekap->first()?->nama ?? '-') : 'Semua layanan',
-            'rekap'     => $rekap,
-            'dokumen'   => $dokumen,
+            'filter' => $f,
+            'periode' => $this->periode($f),
+            'kategori' => $f['layanan'] ? ($rekap->first()?->nama ?? '-') : 'Semua layanan',
+            'rekap' => $rekap,
+            'dokumen' => $dokumen,
             'ringkasan' => [
-                'total'     => $rekap->sum('total'),
-                'menunggu'  => $rekap->where('butuh_tindak_lanjut', true)->sum('menunggu'),
-                'selesai'   => $rekap->where('butuh_tindak_lanjut', true)->sum('selesai'),
+                'total' => $rekap->sum('total'),
+                'menunggu' => $rekap->where('butuh_tindak_lanjut', true)->sum('menunggu'),
+                'selesai' => $rekap->where('butuh_tindak_lanjut', true)->sum('selesai'),
                 'pengaduan' => $pengaduan->sum('total'),
             ],
         ];
@@ -61,10 +61,10 @@ class LaporanService
         $fmt = fn (string $d) => Carbon::parse($d)->format('d/m/Y');
 
         return match (true) {
-            (bool) ($f['dari'] && $f['sampai']) => $fmt($f['dari']) . ' - ' . $fmt($f['sampai']),
-            (bool) $f['dari']                   => 'Sejak ' . $fmt($f['dari']),
-            (bool) $f['sampai']                 => 'Sampai ' . $fmt($f['sampai']),
-            default                             => 'Semua tanggal',
+            (bool) ($f['dari'] && $f['sampai']) => $fmt($f['dari']).' - '.$fmt($f['sampai']),
+            (bool) $f['dari'] => 'Sejak '.$fmt($f['dari']),
+            (bool) $f['sampai'] => 'Sampai '.$fmt($f['sampai']),
+            default => 'Semua tanggal',
         };
     }
 }

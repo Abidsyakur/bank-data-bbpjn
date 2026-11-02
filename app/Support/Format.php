@@ -16,6 +16,6 @@ class Format
             $i++;
         }
 
-        return number_format($nilai, $i === 0 ? 0 : 1, ',', '.') . ' ' . $satuan[$i];
+        return number_format($nilai, $i === 0 ? 0 : 1, ',', '.').' '.$satuan[$i];
     }
 }

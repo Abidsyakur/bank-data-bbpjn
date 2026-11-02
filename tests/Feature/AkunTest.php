@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class AkunTest extends TestCase
 {
-    use RefreshDatabase, MembuatDataUji;
+    use MembuatDataUji, RefreshDatabase;
 
     private User $pimpinan;
 
@@ -31,10 +31,10 @@ class AkunTest extends TestCase
     private function dataAkunBaru(array $ubah = []): array
     {
         return array_merge([
-            'nama'                  => 'Petugas Uji',
-            'username'              => 'petugas_uji',
-            'role_id'               => $this->roleId('admin_jaki'),
-            'password'              => 'sandi12345',
+            'nama' => 'Petugas Uji',
+            'username' => 'petugas_uji',
+            'role_id' => $this->roleId('admin_jaki'),
+            'password' => 'sandi12345',
             'password_confirmation' => 'sandi12345',
         ], $ubah);
     }
@@ -87,10 +87,10 @@ class AkunTest extends TestCase
         $akun = $this->buatUser('admin_pp', 'petugas');
 
         $this->put(route('akun.update', $akun), [
-            'nama'     => 'Nama Baru',
+            'nama' => 'Nama Baru',
             'username' => 'petugas',
-            'role_id'  => $this->roleId('admin_jaki'),
-            'aktif'    => '1',
+            'role_id' => $this->roleId('admin_jaki'),
+            'aktif' => '1',
         ])->assertRedirect(route('akun.index'));
 
         $akun->refresh();
@@ -105,12 +105,12 @@ class AkunTest extends TestCase
         $akun = $this->buatUser('admin_pp', 'petugas');
 
         $this->put(route('akun.update', $akun), [
-            'nama'                  => 'Petugas',
-            'username'              => 'petugas',
-            'role_id'               => $akun->role_id,
-            'password'              => 'sandi-baru-123',
+            'nama' => 'Petugas',
+            'username' => 'petugas',
+            'role_id' => $akun->role_id,
+            'password' => 'sandi-baru-123',
             'password_confirmation' => 'sandi-baru-123',
-            'aktif'                 => '1',
+            'aktif' => '1',
         ])->assertRedirect(route('akun.index'));
 
         $this->assertTrue(Hash::check('sandi-baru-123', $akun->fresh()->password));
@@ -139,10 +139,10 @@ class AkunTest extends TestCase
     public function test_pimpinan_tidak_dapat_menurunkan_peran_atau_menonaktifkan_diri_lewat_formulir(): void
     {
         $this->put(route('akun.update', $this->pimpinan), [
-            'nama'     => $this->pimpinan->nama,
+            'nama' => $this->pimpinan->nama,
             'username' => $this->pimpinan->username,
-            'role_id'  => $this->roleId('admin_pp'),
-            'aktif'    => '0',
+            'role_id' => $this->roleId('admin_pp'),
+            'aktif' => '0',
         ])->assertRedirect(route('akun.index'));
 
         $segar = $this->pimpinan->fresh();

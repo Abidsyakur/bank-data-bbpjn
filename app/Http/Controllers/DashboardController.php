@@ -20,7 +20,7 @@ class DashboardController extends Controller
             ->withCount([
                 'dokumen as total',
                 'dokumen as menunggu' => fn ($q) => $q->where('status', Dokumen::STATUS_MENUNGGU),
-                'dokumen as selesai'  => fn ($q) => $q->where('status', Dokumen::STATUS_SELESAI),
+                'dokumen as selesai' => fn ($q) => $q->where('status', Dokumen::STATUS_SELESAI),
             ])
             ->get();
 
@@ -28,30 +28,30 @@ class DashboardController extends Controller
 
         // Hanya layanan tertentu yang melacak status; sisanya murni arsip.
         $berstatus = $rekap->where('butuh_tindak_lanjut', true)->values();
-        $arsip     = $rekap->where('butuh_tindak_lanjut', false)->values();
+        $arsip = $rekap->where('butuh_tindak_lanjut', false)->values();
 
         // Persentase = selesai / (menunggu + selesai), hanya dari layanan yang melacak status.
         $dipantau = $berstatus->sum('menunggu') + $berstatus->sum('selesai');
 
         $ringkasan = [
-            'total'              => $rekap->sum('total'),
-            'menunggu'           => $berstatus->sum('menunggu'),
-            'selesai'            => $berstatus->sum('selesai'),
-            'pengaduan'          => $pengaduan->sum('total'),
+            'total' => $rekap->sum('total'),
+            'menunggu' => $berstatus->sum('menunggu'),
+            'selesai' => $berstatus->sum('selesai'),
+            'pengaduan' => $pengaduan->sum('total'),
             'pengaduan_menunggu' => $pengaduan->where('butuh_tindak_lanjut', true)->sum('menunggu'),
             'pengaduan_berstatus' => $pengaduan->where('butuh_tindak_lanjut', true)->isNotEmpty(),
-            'ada_status'         => $berstatus->isNotEmpty(),
-            'dipantau'           => $dipantau,
-            'persen_selesai'     => $dipantau > 0 ? (int) round($berstatus->sum('selesai') / $dipantau * 100) : null,
-            'arsip'              => $arsip->sum('total'),
+            'ada_status' => $berstatus->isNotEmpty(),
+            'dipantau' => $dipantau,
+            'persen_selesai' => $dipantau > 0 ? (int) round($berstatus->sum('selesai') / $dipantau * 100) : null,
+            'arsip' => $arsip->sum('total'),
         ];
 
         // Dokumen per bulan, 12 bulan terakhir (ekspresi tanggal menyesuaikan basis data).
         $awal = now()->startOfMonth()->subMonths(11);
         $ekspresiBulan = match (DB::getDriverName()) {
             'sqlite' => "strftime('%Y-%m', tanggal)",
-            'pgsql'  => "to_char(tanggal, 'YYYY-MM')",
-            default  => "DATE_FORMAT(tanggal, '%Y-%m')",
+            'pgsql' => "to_char(tanggal, 'YYYY-MM')",
+            default => "DATE_FORMAT(tanggal, '%Y-%m')",
         };
 
         $perBulan = Dokumen::dapatDilihat($user)
@@ -65,25 +65,25 @@ class DashboardController extends Controller
         for ($i = 0; $i < 12; $i++) {
             $bulan = $awal->copy()->addMonths($i);
             $labelBulan[] = $bulan->locale('id')->translatedFormat('M Y');
-            $dataBulan[]  = (int) ($perBulan[$bulan->format('Y-m')] ?? 0);
+            $dataBulan[] = (int) ($perBulan[$bulan->format('Y-m')] ?? 0);
         }
 
         $chartBulan = [
             'type' => 'bar',
             'data' => [
-                'labels'   => $labelBulan,
+                'labels' => $labelBulan,
                 'datasets' => [[
-                    'label'           => 'Dokumen',
-                    'data'            => $dataBulan,
+                    'label' => 'Dokumen',
+                    'data' => $dataBulan,
                     'backgroundColor' => '#42517c',
-                    'borderRadius'    => 4,
+                    'borderRadius' => 4,
                 ]],
             ],
             'options' => [
-                'responsive'          => true,
+                'responsive' => true,
                 'maintainAspectRatio' => false,
-                'plugins'             => ['legend' => ['display' => false]],
-                'scales'              => ['y' => ['beginAtZero' => true, 'ticks' => ['precision' => 0]]],
+                'plugins' => ['legend' => ['display' => false]],
+                'scales' => ['y' => ['beginAtZero' => true, 'ticks' => ['precision' => 0]]],
             ],
         ];
 
@@ -91,17 +91,17 @@ class DashboardController extends Controller
         $chartStatus = [
             'type' => 'bar',
             'data' => [
-                'labels'   => $berstatus->pluck('nama')->all(),
+                'labels' => $berstatus->pluck('nama')->all(),
                 'datasets' => [
                     ['label' => 'Menunggu', 'data' => $berstatus->pluck('menunggu')->all(), 'backgroundColor' => '#d93a4a'],
                     ['label' => 'Selesai', 'data' => $berstatus->pluck('selesai')->all(), 'backgroundColor' => '#1f7a4d'],
                 ],
             ],
             'options' => [
-                'indexAxis'           => 'y',
-                'responsive'          => true,
+                'indexAxis' => 'y',
+                'responsive' => true,
                 'maintainAspectRatio' => false,
-                'scales'              => [
+                'scales' => [
                     'x' => ['stacked' => true, 'beginAtZero' => true, 'ticks' => ['precision' => 0]],
                     'y' => ['stacked' => true],
                 ],
@@ -112,25 +112,25 @@ class DashboardController extends Controller
         $chartArsip = [
             'type' => 'bar',
             'data' => [
-                'labels'   => $arsip->pluck('nama')->all(),
+                'labels' => $arsip->pluck('nama')->all(),
                 'datasets' => [[
-                    'label'           => 'Dokumen',
-                    'data'            => $arsip->pluck('total')->all(),
+                    'label' => 'Dokumen',
+                    'data' => $arsip->pluck('total')->all(),
                     'backgroundColor' => '#42517c',
-                    'borderRadius'    => 4,
+                    'borderRadius' => 4,
                 ]],
             ],
             'options' => [
-                'indexAxis'           => 'y',
-                'responsive'          => true,
+                'indexAxis' => 'y',
+                'responsive' => true,
                 'maintainAspectRatio' => false,
-                'plugins'             => ['legend' => ['display' => false]],
-                'scales'              => ['x' => ['beginAtZero' => true, 'ticks' => ['precision' => 0]]],
+                'plugins' => ['legend' => ['display' => false]],
+                'scales' => ['x' => ['beginAtZero' => true, 'ticks' => ['precision' => 0]]],
             ],
         ];
 
         $tinggiStatus = max(160, 44 * $berstatus->count() + 70);
-        $tinggiArsip  = max(160, 44 * $arsip->count() + 50);
+        $tinggiArsip = max(160, 44 * $arsip->count() + 50);
 
         return view('dashboard', compact('user', 'berstatus', 'arsip', 'ringkasan', 'chartBulan', 'chartStatus', 'chartArsip', 'tinggiStatus', 'tinggiArsip'));
     }

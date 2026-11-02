@@ -15,9 +15,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class TindakLanjutController extends Controller
 {
-    public function __construct(private BerkasService $berkasService)
-    {
-    }
+    public function __construct(private BerkasService $berkasService) {}
 
     public function store(Request $request, Dokumen $dokumen): RedirectResponse
     {
@@ -28,7 +26,7 @@ class TindakLanjutController extends Controller
         $data = $request->validate([
             'catatan' => ['required', 'string', 'max:2000'],
             'tanggal' => ['required', 'date'],
-            'bukti'   => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+            'bukti' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
         ], PesanValidasi::pesan(), PesanValidasi::atribut());
 
         $path = $request->hasFile('bukti')
@@ -39,10 +37,10 @@ class TindakLanjutController extends Controller
         DB::transaction(function () use ($request, $dokumen, $data, $path, $selesai) {
             TindakLanjut::create([
                 'dokumen_id' => $dokumen->id,
-                'user_id'    => $request->user()->id,
+                'user_id' => $request->user()->id,
                 'bukti_path' => $path,
-                'catatan'    => $data['catatan'],
-                'tanggal'    => $data['tanggal'],
+                'catatan' => $data['catatan'],
+                'tanggal' => $data['tanggal'],
             ]);
 
             if ($selesai) {
@@ -90,7 +88,7 @@ class TindakLanjutController extends Controller
         Gate::authorize('view', $dokumen);
         abort_unless($this->berkasService->ada($tindakLanjut->bukti_path), 404);
 
-        $nama = 'bukti-' . $dokumen->id . '-' . $tindakLanjut->id . '.' . pathinfo($tindakLanjut->bukti_path, PATHINFO_EXTENSION);
+        $nama = 'bukti-'.$dokumen->id.'-'.$tindakLanjut->id.'.'.pathinfo($tindakLanjut->bukti_path, PATHINFO_EXTENSION);
 
         if ($request->boolean('unduh')) {
             ActivityLogger::catat('tindak_lanjut.unduh', $dokumen->judul, $dokumen->id);

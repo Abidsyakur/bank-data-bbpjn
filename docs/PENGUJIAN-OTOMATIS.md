@@ -44,7 +44,13 @@ php artisan test --coverage --min=70
 php artisan test --coverage-html storage/coverage     # buka storage/coverage/index.html
 ```
 
-Target 70% sudah realistis; mengejar 100% tidak perlu. Kelas yang bergantung pada MySQL (BackupService) baru tercakup saat tes dijalankan pada MySQL.
+Target 70% sudah realistis; mengejar 100% tidak perlu. BackupService dan BackupController hanya tercakup saat tes dijalankan pada MySQL; pada SQLite keduanya dilewati sehingga coverage total tertahan di bawah 70% (hasil nyata: 69,6%). Karena itu ukur coverage pada MySQL:
+
+```
+set DB_CONNECTION=mysql
+set DB_DATABASE=bank_data_bbpjn_test
+php artisan test --coverage --min=70
+```
 
 ## Performa
 

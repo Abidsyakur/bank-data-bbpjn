@@ -23,10 +23,12 @@ use ZipArchive;
  */
 class BackupTest extends TestCase
 {
-    use RefreshDatabase, MembuatDataUji;
+    use MembuatDataUji, RefreshDatabase;
 
     private User $pimpinan;
+
     private User $pp;
+
     private BackupService $backup;
 
     protected function setUp(): void
@@ -52,7 +54,7 @@ class BackupTest extends TestCase
     private function buatZip(string $nama, array $isi): void
     {
         Storage::disk('local')->makeDirectory('backup');
-        $zip = new ZipArchive();
+        $zip = new ZipArchive;
         $zip->open(Storage::disk('local')->path("backup/{$nama}"), ZipArchive::CREATE);
         foreach ($isi as $jalur => $konten) {
             $zip->addFromString($jalur, $konten);
@@ -62,7 +64,7 @@ class BackupTest extends TestCase
 
     private function ubahIsiZip(string $nama, string $jalur, callable $ubah): void
     {
-        $zip = new ZipArchive();
+        $zip = new ZipArchive;
         $zip->open(Storage::disk('local')->path("backup/{$nama}"));
         $zip->addFromString($jalur, $ubah((string) $zip->getFromName($jalur)));
         $zip->close();
@@ -75,7 +77,7 @@ class BackupTest extends TestCase
         $nama = $this->backup->buat('backup', $this->pimpinan);
 
         $this->assertMatchesRegularExpression('/^backup-\d{8}-\d{6}\.zip$/', $nama);
-        $zip = new ZipArchive();
+        $zip = new ZipArchive;
         $this->assertTrue($zip->open(Storage::disk('local')->path("backup/{$nama}")));
         $this->assertNotFalse($zip->locateName('manifest.json'));
         $this->assertNotFalse($zip->locateName('database.ndjson'));
@@ -128,7 +130,7 @@ class BackupTest extends TestCase
         $this->buatDokumen($this->pp, 'perizinan', ['judul' => 'Awal']);
         $nama = $this->backup->buat('backup', $this->pimpinan);
         $this->buatDokumen($this->pp, 'perizinan', ['judul' => 'Sesudah']);
-        $this->ubahIsiZip($nama, 'database.ndjson', fn ($isi) => $isi . "\n{\"t\":\"dokumen\",\"r\":{}}");
+        $this->ubahIsiZip($nama, 'database.ndjson', fn ($isi) => $isi."\n{\"t\":\"dokumen\",\"r\":{}}");
 
         try {
             $this->backup->pulihkan($nama, $this->pimpinan);

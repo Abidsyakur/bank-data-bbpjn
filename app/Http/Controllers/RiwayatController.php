@@ -17,9 +17,9 @@ class RiwayatController extends Controller
     {
         $filter = $request->validate([
             'pengguna' => ['nullable', 'integer', Rule::exists('users', 'id')],
-            'aksi'     => ['nullable', Rule::in(array_keys(LabelAksi::DAFTAR))],
-            'dari'     => ['nullable', 'date'],
-            'sampai'   => ['nullable', 'date', 'after_or_equal:dari'],
+            'aksi' => ['nullable', Rule::in(array_keys(LabelAksi::DAFTAR))],
+            'dari' => ['nullable', 'date'],
+            'sampai' => ['nullable', 'date', 'after_or_equal:dari'],
         ], PesanValidasi::pesan(), PesanValidasi::atribut());
 
         $log = DB::table('log_aktivitas as l')
@@ -40,8 +40,8 @@ class RiwayatController extends Controller
             ->withQueryString();
 
         return view('riwayat.index', [
-            'log'      => $log,
-            'filter'   => $filter,
+            'log' => $log,
+            'filter' => $filter,
             'pengguna' => User::orderBy('nama')->get(['id', 'nama', 'username']),
             'aksiList' => LabelAksi::DAFTAR,
         ]);
